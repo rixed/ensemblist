@@ -47,7 +47,7 @@ int glut_fenPosX = -1;
 int glut_fenPosY = -1;
 unsigned glut_interval = 25;	/* msec */
 unsigned long glut_mtime = 0;
-static unsigned glut_fenMode = /*GLUT_DOUBLE |*/ GLUT_RGBA | GLUT_DEPTH;// | GLUT_STENCIL;
+static unsigned glut_fenMode = GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_STENCIL;
 static const char *glut_fenName = "Ensemblist";
 static int glut_top_window;
 

@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 #include <assert.h>
 #include "opengl.h"
 #include "draw.h"
@@ -113,7 +114,8 @@ void draw_init()
 	gltv_log_warning(GLTV_LOG_OPTIONAL, "OpenGl Vendor : %s", glGetString(GL_VENDOR));
 	gltv_log_warning(GLTV_LOG_OPTIONAL, "OpenGl Renderer : %s", glGetString(GL_RENDERER));
 	gltv_log_warning(GLTV_LOG_OPTIONAL, "OpenGl Version : %s", glGetString(GL_VERSION));
-	gltv_log_warning(GLTV_LOG_OPTIONAL, "OpenGl Extensions : %s", glGetString(GL_EXTENSIONS));
+	const char *extensions = glGetString(GL_EXTENSIONS);
+	gltv_log_warning(GLTV_LOG_OPTIONAL, "OpenGl Extensions : %s", extensions);
 	/* draw specific reset */
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
@@ -123,23 +125,28 @@ void draw_init()
 	gltv_log_warning(level, "Stencil size : %d bits\n", stencil_size);
 	ktx_ok = 0;
 	if (with_ktx) {
-		/* get KTX functions */
-		glNewBufferRegion = (PFNGLNEWBUFFERREGIONPROC)lglGetProcAddress("glNewBufferRegion");
-		glDeleteBufferRegion = (PFNGLDELETEBUFFERREGIONPROC)lglGetProcAddress("glDeleteBufferRegion");
-		glReadBufferRegion = (PFNGLREADBUFFERREGIONPROC)lglGetProcAddress("glReadBufferRegion");
-		glDrawBufferRegion = (PFNGLDRAWBUFFERREGIONPROC)lglGetProcAddress("glDrawBufferRegion");
-		glBufferRegionEnabled = (PFNGLBUFFERREGIONENABLEDPROC)lglGetProcAddress("glBufferRegionEnabled");
-		if (glNewBufferRegion && glDeleteBufferRegion && glReadBufferRegion && glDrawBufferRegion && glBufferRegionEnabled) {
-			if (glBufferRegionEnabled()) {
-				gltv_log_warning(GLTV_LOG_MUSTSEE, "KTX extention in use :-)");
-				ktx_region = glNewBufferRegion(GL_KTX_Z_REGION);
-				atexit(ktx_free);
-				ktx_ok = 1;
+		if (strstr(extensions, "GL_KTX_buffer_region")) {
+			/* get KTX functions */
+			glNewBufferRegion = (PFNGLNEWBUFFERREGIONPROC)lglGetProcAddress("glNewBufferRegion");
+			glDeleteBufferRegion = (PFNGLDELETEBUFFERREGIONPROC)lglGetProcAddress("glDeleteBufferRegion");
+			glReadBufferRegion = (PFNGLREADBUFFERREGIONPROC)lglGetProcAddress("glReadBufferRegion");
+			glDrawBufferRegion = (PFNGLDRAWBUFFERREGIONPROC)lglGetProcAddress("glDrawBufferRegion");
+			glBufferRegionEnabled = (PFNGLBUFFERREGIONENABLEDPROC)lglGetProcAddress("glBufferRegionEnabled");
+			if (glNewBufferRegion && glDeleteBufferRegion && glReadBufferRegion && glDrawBufferRegion && glBufferRegionEnabled) {
+				if (glBufferRegionEnabled()) {
+					gltv_log_warning(GLTV_LOG_MUSTSEE, "KTX extention in use :-)");
+					ktx_region = glNewBufferRegion(GL_KTX_Z_REGION);
+					atexit(ktx_free);
+					ktx_ok = 1;
+				} else {
+					gltv_log_warning(GLTV_LOG_MUSTSEE, "KTX extention not usable :'(");
+					ktx_ok = 0;
+				}
 			} else {
-				gltv_log_warning(GLTV_LOG_MUSTSEE, "KTX extention not usable :'(");
-				ktx_ok = 0;
+				goto not_supported;
 			}
 		} else {
+not_supported:
 			gltv_log_warning(GLTV_LOG_MUSTSEE, "KTX extention not supported");
 			ktx_ok = 0;
 		}
