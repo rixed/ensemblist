@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>Ensemblist - Lancer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<link rel="stylesheet" href="../style.css" type="text/css">
+</head>
+<body>
+<table border="0" cellspacing="0" width="780">
+	<tr width="100%">
+		<th>&nbsp;&nbsp;<a href="index.html">Accueil</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="lancer.html">Lancer</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="menu.html">Menu</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="jeu.html">Jeu</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="credits.html">Crédits</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+	</tr>
+</table>
+<table width="780" cellpadding="0" cellspacing="0" border="1">
+<tr><td>
+<h1>Lancer</h1>
+
+<h2>Ligne de commande</h2>
+
+<p><b>Ensemblist</b> admet les arguments suivants :</p>
+
+<ul>
+<li>--help : affiche les arguments ;
+<li>--silent : mode sans son (pour le cas où le périphérique sonnore est occupé) ;
+<li>--ktx : essaye d'utiliser l'extention <i>KTX</i> ;
+<li>--wgl : essaye d'utiliser l'extention <i>WGL</i> pour les buffers de pixels ;
+<li>--debug : quoi, où ça un bug ?
+</ul>
+
+<p>Notes pour Unix/MacOS :<br>
+Pour l'instant, Mikmod démarre exclusivement en mode <i>OSS</i> ce qui n'est pas terrible.<br>
+L'option <i>--wgl</i> est sans effet puisqu'il s'agit d'une extention exclusive
+windows. L'option <i>--ktx</i> fait la même chose, mais ne marche pas comme il
+faut (c'est soit de ma faute, soit celle de <i>Nvidia</i>. A débattre.)</p>
+
+<p>Notes pour Windows :<br>
+Les options <i>--ktx</i> et <i>--wgl</i> sont mutuelement exclusives. Préférez
+celle qui marche (si l'une d'entre elles marche - sinon, trop dommage)</p>
+
+<br><br><br>
+</td></tr>
+</table>
+</body>
+</html>

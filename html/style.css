@@ -1,0 +1,92 @@
+* {
+    font-family: Verdana, Arial, Helvetica, sans-serif, monospace;
+}
+
+body {
+	background: #b2c5c1;
+	color: #000000;
+}
+
+a:link {    
+	color: #304030;
+	background: transparent;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #304030;
+	background: transparent;
+	text-decoration: none;
+}
+
+a:active {
+	color: #608060;
+	background: #ADD8E6;
+	text-decoration: none;
+}
+
+h1 {
+	color: #803033;
+	margin-left: 30px;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	font-size: 20px;
+}
+
+h2 {
+	color: #803033;
+	margin-left: 15px;
+	font-size: 18px;
+}
+
+h3 {
+	color: #803033;
+	margin-left: 15px;
+	font-size: 16px;
+}
+
+p {
+	background: #b2c5c1;  
+	color: #000000;  
+	margin-left: 5px;
+	margin-right: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: justify;
+	font-size: 14px;
+}
+
+ul {
+	margin-left: 25px;
+	margin-right: 5px;
+	border-top: none;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-left: 1px black solid;
+	text-align: left;
+	font-size: 16px;
+	padding-top: 2px;
+}
+
+img {
+    border: 0px;
+	 margin-left: 15px;
+}
+
+div.shell {
+	background: white;
+	margin-left: 5px;
+	margin-right: 5px;
+	border-top: none;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-bottom: 1px black solid;
+	border-right: 1px black solid;
+	border-left: 1px black solid;
+	border-top: 1px black solid;
+	text-align: left;
+	font-size: 16px;
+	padding-top: 2px;
+	background-color: #eeeae6;
+}
+

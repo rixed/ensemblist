@@ -1,0 +1,2 @@
+?package(ensemblist):needs=X11 section=Games/Puzzles\
+  title="Ensemblist" command="/usr/games/ensemblist"

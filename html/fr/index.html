@@ -1,0 +1,106 @@
+<html>
+<head>
+<title>Ensemblist - Accueil</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<link rel="stylesheet" href="../style.css" type="text/css">
+</head>
+<body>
+<table border="0" cellspacing="0" width="780">
+	<tr width="100%">
+		<th>&nbsp;&nbsp;<a href="index.html">Accueil</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="lancer.html">Lancer</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="menu.html">Menu</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="jeu.html">Jeu</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="credits.html">Crédits</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+	</tr>
+</table>
+<table width="780" cellpadding="0" cellspacing="0" border="1">
+<tr><td>
+<h1>Accueil</h1>
+
+<h2>Description</h2>
+
+<table border="0">
+	<tr>
+		<td>
+<p>L'<b>Ensemblist</b> est un jeu de réflexion original crée à l'occasion du concours
+de programmation de jeux vidéo organisé pour la fête de l'internet 2003.<br>
+Dans ce jeu, vous devez assembler des primitives géométriques simples pour
+reconstituer la forme voulue. Vous pouvez pour cela déplacer les primitives, les
+faire tourner, et les composer avec les opérations ensemblistes <i>union</i>, <i>intersection</i>
+et <i>négation</i>. Vous construisez ainsi ce qu'on appelle une <b>C.S.G</b> pour 
+<b>C</b>onstructive <b>S</b>olid <b>G</b>eometry.</p>
+		</td>
+	</tr>
+</table>
+
+<h2>Requis</h2>
+
+<p>Vous devez posseder un ordinateur muni d'un des systèmes d'exploitation suivants pour
+faire fonctionner le jeu :</p>
+
+<ul>
+<li>Unix ;
+<li>MacOs X ;
+<li>Windows 98 ou + ;
+</ul>
+
+
+<p>Vous devez également posseder une carte vidéo munie de drivers <a href="http://www.opengl.org">openGl</a> accélérés.
+Techniquement, les CSG requièrent au minimum 2 bits de stencil buffer (mais plus il y en
+a, mieux c'est) et peuvent utiliser les extentions <i>KTX</i> ou <i>WGL</i> pour accélerer les recopies du <i>zbuffer</i>.<br>
+
+Une carte sonnore vous permettra de profiter de la musique.
+</p>
+
+<h2>Download</h2>
+
+<ul>
+<li><a href="http://savannah.nongnu.org/files/?group=ensemblist">Download Page</a>
+</ul>
+
+<h2>Installation</h2>
+
+<h3>Bibliothèques</h3>
+
+<p>Les bibliothèques suivantes sont nécéssaires :</p>
+
+<ul>
+<li><a href="http://www.opengl.org">OpenGL</a> ;
+<li><a href="http://www.opengl.org">GLUT & GLU</a> ;
+<li><a href="http://www.libpng.org/pub/png/">libpng</a> ;
+<li><a href="http://www.mikmod.org">MikMod</a> ;
+</ul>
+
+<h3>Unix</h3>
+
+<p>Une Makefile est fournie. Tout compilateur C récent doit pouvoir compiler sans problème (si ce n'est sans <i>warning</i>).
+Comme d'habitude :</p>
+<div class="shell">
+$ make<br>
+$ su -<br>
+$ make install<br>
+</div>
+<p>installera dans <i>/usr/local/games</i> et <i>/var/lib/ensemblist</i>.<br>
+Vous pouvez préferer <i>export DESTDIR=/autre/part</i> pour changer la base d'installation.</p>
+
+<h3>MacOS</h3>
+
+<p>Même procédure que précédemment.<br>
+Utilisez les outils GNU pour de meilleurs résultats.</p>
+
+<h3>Windows</h3>
+
+<p>Les fichiers <i>.sln</i> et <i>.vcproj</i> sont fournis.<br>
+Pensez tout de même à passer sous Unix un de ces jours.</p>
+
+<h2>En cas de problème</h2>
+
+<p>Pour les versions Unix/MacOsX, contacter <a href="mailto:rixed@free.fr">rixed@free.fr</a>.<br>
+Pour la version windows, contacter <a href="mailto:dom@tatm.com">dom@tatm.com</a>.</p>
+
+<br><br><br>
+</td></tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Ensemblist - Menu</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<link rel="stylesheet" href="../style.css" type="text/css">
+</head>
+<body>
+<table border="0" cellspacing="0" width="780">
+	<tr width="100%">
+		<th>&nbsp;&nbsp;<a href="index.html">Accueil</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="lancer.html">Lancer</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="menu.html">Menu</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="jeu.html">Jeu</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="credits.html">Crédits</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+	</tr>
+</table>
+<table width="780" cellpadding="0" cellspacing="0" border="1">
+<tr><td>
+<h1>Menu</h1>
+
+<h2>Bonjour</h2>
+
+<p>Vous devriez voir votre nom, et votre score. Les scores sont sauvegardés
+automatiquement. Votre nom, lui, est demandé au système.<br>
+Contrairement à tous les autres jeux de la terre, vous ne commencez pas avec
+zéro points, mais avec un point. Ceci parceque vous ne pouvez jouer qu'aux
+niveaux qui possèdent un score inférieur ou égal au votre. Avec un score de
+un, vous ne pouvez jouer au début qu'au premier niveau. Si vous gagnez, vous
+marquez un point. Vous pourrez alors jouer au niveau de score deux pour deux
+nouveaux points, etc... Mais attention, car lorsque vous perdez, vous perdez
+autant de point que le score du niveau. Un point est cependant le minimum.</p>
+
+<p>Cliquez sur <b>ok</b> si vous avez compris le principe, sinon sur
+<b>quitter</b>.</p>
+
+<h2>Boucle principale</h2>
+
+<p>Ici vous pouvez choisir ce que vous voulez faire. Pour l'instant, vous
+voulez jouer. Cliquez sur <b>Jouer</b>.
+
+<h2>Jouer</h2>
+
+<p>Il y a deux modes de jeu : tournoi ou libre.<br>
+<br>
+En tournoi, vous jouez normalement, c'est à dire que votre score est en jeu.
+En libre, vous jouez sans gagner ni perdre. Toutes les énigmes que vous
+construirez seront jouables en libre, pas en tournois.</p>
+
+<h2>Tournoi</h2>
+
+<p>Vous avez là une liste d'énigmes. Choisissez en une que vous pouvez vous
+"offrir". Pour l'instant vous n'avez qu'un point, donc ce sera forcément la
+première. Les flèches en bas permettent de faire défiler la liste.
+<b>Retours</b> permet de revenir à la boucle principale.</p>
+
+<h2>Libre</h2>
+
+<p>En mode libre c'est pareil, sans le score.</p>
+
+<h2>Editeur de niveau</h2>
+
+<p>Vous pouvez ici (cliquer sur <b>editer</b> dans la boucle principale) éditer
+vos propres énigmes. Commencez par cliquer sur une ligne vide et entrez un nom.
+Faites preuve d'originalité : je ne me souviens pas avoir codé le test de
+détection de doublons dans les noms.<br>
+Lorsque vous avez fini de tapper, validez avec la touche <i>Return</i>. Puis
+cliquez sur ce nom pour vous retrouver dans l'éditeur.<br>
+L'éditeur fonctionne comme le jeu lui même (Cf les pages suivantes), mais
+il n'y a pas de solution particulière et vous commencez avec toutes les
+primitives possibles. Une icone spéciale vous permet de retirer de la liste
+des primitives les primitives sélectionnées pour se débarasser de celles que
+l'on ne veut pas utiliser. Allez-y doucement avec le nombre de primitives :
+l'algorithme de <i>CSG</i> est en o(x^2) les mauvais jours.</p>
+
+<p>Quand vous quittez l'éditeur, votre énigme figure toujours dans cette
+liste. Pour la déplacer dans la liste des énigmes jouables, cliquez sur la
+case <b>Fin</b> de cette ligne. Si vous voulez l'effacer, cliquez sur la case
+de la colonne notée <b>Eff</b>. Si vous inversez fréquemment les deux, n'hésitez
+pas à coder un <i>undo</i>.</p>
+
+<br><br><br>
+</td></tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,1 @@
+shlibs:Depends=libc6 (>= 2.3.2.ds1-4), libglut3, libmikmod2 (>= 3.1.10), libpng12-0 (>= 1.2.5.0-4), xlibmesa3-gl | libgl1, xlibmesa3-glu | libglu1, xlibs (>> 4.1.0)

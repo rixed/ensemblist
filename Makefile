@@ -3,11 +3,11 @@ CC=gcc
 ifdef DEBUG
 DATADIR=/home/rixed/src/ensemblist/datas
 COMPILE_FLAGS=-Wall -fno-builtin -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wredundant-decls -O0 -g `libmikmod-config --cflags` -DDATADIR=$(DATADIR)
-LINK_FLAGS=-g -lm -L /usr/X11R6/lib -lXmu -lGL -lglut -lGLU -L /usr/local/lib -lpng `libmikmod-config --libs` -lefence -lpthread
+LINK_FLAGS=-g -lm -L /usr/X11R6/lib -lXmu -lGL -lglut -lGLU -lpng `libmikmod-config --libs` -lefence -lpthread
 else
 DATADIR=$(DESTDIR)/usr/share/$(NAME)
 COMPILE_FLAGS=-Wall -O3 -fomit-frame-pointer `libmikmod-config --cflags` -DNDEBUG -DDATADIR=$(DATADIR)
-LINK_FLAGS=-lm -L /usr/X11R6/lib -lXmu -lGL -lglut -lGLU -L /usr/local/lib -lpng `libmikmod-config --libs` -lpthread
+LINK_FLAGS=-lm -L /usr/X11R6/lib -lXmu -lGL -lglut -lGLU -lpng `libmikmod-config --libs` -lpthread
 endif
 APPLE_FRAMEWORKS=-framework GLUT -framework Cocoa -framework OpenGL
 #uncomment the following if you want to compile on MacOS/X
@@ -48,15 +48,13 @@ depends: $(wildcard *.c) $(wildcard *.h) menu_digits.h
 		touch $@ ; \
 	fi
 
-$(DATADIR):
+install: $(NAME)
 	@echo '$(COL)$@$(NORM)'
-	@mkdir -p $(DATADIR)
+	@install -d $(DATADIR) $(DESTDIR)/usr/games
+	@install -m755 $(NAME) $(DESTDIR)/usr/games
+	@find datas/ -\( -name CVS -prune -\) -o -type f -exec install -m644 \{\} $(DATADIR) \;
 
-install: $(NAME) $(DATADIR)
-	@echo '$(COL)$@$(NORM)'
-	@cp -f $(NAME) $(DESTDIR)/usr/games/
-	@cp -f datas/* $(DATADIR)
-	@chmod a+wx $(DATADIR)
-	@chmod a+wx $(DATADIR)/enigms.lst
+deb:
+	dpkg-buildpackage -rfakeroot
 
 include depends

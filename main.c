@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "user.h"
 
 #define NAME "Ensemblist"
-#define VERSION "20031016"
+#define VERSION "20031203"
 #ifdef NDEBUG
 #define DEBUGSTR ""
 #else
@@ -48,7 +48,7 @@ int glut_fenPosY = -1;
 unsigned glut_interval = 25;	/* msec */
 unsigned long glut_mtime = 0;
 static unsigned glut_fenMode = GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_STENCIL;
-static const char *glut_fenName = "L'ensembleur";
+static const char *glut_fenName = "Ensemblist";
 static int glut_top_window;
 
 static void glut_reshape(int w, int h)

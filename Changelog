@@ -1,3 +1,8 @@
+2003-12-03  Cedric Cellier  <rixed@free.fr>
+
+	* libCurl: removed. no more http connexions.
+	* debian: reorganisation for debianization.
+
 2003-04-17  Cedric Cellier  <rixed@free.fr>
 
 	* Menu: translated to english.

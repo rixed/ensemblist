@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+#include <math.h>
 #include "modes.h"
 #include "data.h"
 #include "slist.h"
@@ -1121,7 +1122,7 @@ void play_display() {
 							visio_perturb = .001;
 							wana_view_solution = 0;
 							sound_sample_start(6, 250, 1, 200);
-							if (user_score>e->score) user_score -= e->score>>1;
+							if (user_score>e->score) user_score --;
 							else user_score = 1;
 						} else timer[0]--;
 					} else timer[1]--;

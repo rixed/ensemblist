@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Ensemblist - Menu</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<link rel="stylesheet" href="../style.css" type="text/css">
+</head>
+<body>
+<table border="0" cellspacing="0" width="780">
+	<tr width="100%">
+		<th>&nbsp;&nbsp;<a href="index.html">Home</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="lancer_en.html">Running</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="menu_en.html">Menu</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="jeu_en.html">Game</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="credits_en.html">Credits</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+	</tr>
+</table>
+<table width="780" cellpadding="0" cellspacing="0" border="1">
+<tr><td>
+<h1>Menu</h1>
+
+<h2>Greetings</h2>
+
+<p>You should read your name and you score. Scores are saved when you quit.
+Your name is asked for to the operating system.<br>
+Despite every other games on earth, you do not start with no points, but with
+one. This is so because you can't play a level if you do not already score at
+least as many points than the score of the level. With your only point, you
+can play only the first level for now. If you ace it, you win another point.
+You could then play level 2 for 2 other points, etc... But beware that if
+you lose by time, your score will be seized down by the amount of score of
+the level you failed. Anyway, one point is a minimum.</p>
+
+<p>Click on <b>ok</b> if you understood, otherwise on <b>Quit</b>.</p>
+
+<h2>Main Loop</h2>
+
+<p>Here you can choose what you want to do. for now, you want to play, let's
+click <b>Play</b>.
+
+<h2>Play</h2>
+
+<p>There are two way : tournament or free.<br>
+<br>
+Tournament is the only way to get some score.
+If you play freely, you won't ever lose nor win any points.
+Every levels that you will build can be played freely, not in tournament.</p>
+
+<h2>Tournament</h2>
+
+<p>Here you have a list of levels. Choose the one you can aford.
+Now with your only point, go for the first one.
+The arrows at the bottom are used to scroll the list.
+<b>Back</b> can take you to the main loop.</p>
+
+<h2>Free Play</h2>
+
+<p>It's the same here, without score.</p>
+
+<h2>Level Editor</h2>
+
+<p>Here (click on <b>edit</b> at main loop), you can build your own levels.
+Start by clicking on an empty row and enter a name for it. Be original : I
+do not remember having checked the multiple use of same name.<br>
+When you are proud of your name, hit <i>Return</i>. Then, click the name
+as in any other level list, and you will enter the editor.<br>
+It works like the game itself (see next page), but there is no particular
+solution to reach, and you start with every possible primitives.
+A special icon is used to remove unwanted primitives. Be kind with the 
+<b>CSG</b>, the algorithm beeing o(x^2) in bad days.</p>
+
+<p>When you leave the editor, your level is still listed in the editors pool. To validate
+this level and send it to the free play pool, click on its checkbox under <b>End</b>.
+If you want to delete it, click on its checkbox under <b>Del</b>. If you confuse between both
+often, don't hesitate to code an <i>undo</i> function.</p>
+
+
+<br><br><br>
+</td></tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>Ensemblist - Home</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<link rel="stylesheet" href="../style.css" type="text/css">
+</head>
+<body>
+<table border="0" cellspacing="0" width="780">
+	<tr width="100%">
+		<th>&nbsp;&nbsp;<a href="index.html">Home</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="lancer_en.html">Running</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="menu_en.html">Menu</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="jeu_en.html">Game</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+		<th><a href="credits_en.html">Credits</a>&nbsp;&nbsp;|&nbsp;&nbsp;</th>
+	</tr>
+</table>
+<table width="780" cellpadding="0" cellspacing="0" border="1">
+<tr><td>
+<h1>Home</h1>
+
+<h2>Description</h2>
+
+<table border="0">
+	<tr>
+		<td>
+<p><b>Ensemblist</b> is a unique reflexion game created for the video game
+coding compo held in March 2003 in Paris.<br>
+In this game, you have to put together several simple geometric primitives to
+build a given shape. For this, you can move, rotate and compose the primitives
+with the boolean operators <i>union</i>, <i>intersection</i> and <i>minus</i>.
+This is building what is called a <b>C.S.G</b>, for <b>C</b>onstructive
+<b>S</b>olid <b>G</b>eometry.</p>
+		</td>
+	</tr>
+</table>
+
+<h2>Requirements</h2>
+
+<p>The game (should) works on any of these operating systems :</p>
+
+<ul>
+<li>Unix ;
+<li>MacOs X ;
+<li>Windows 98+ ;
+</ul>
+
+<p>You will also need accelerated <a href="http://www.opengl.org">openGl</a> drivers for you video board.
+Techniquely speacking, CSG needs at least 2 bits of stencil buffer (but the more bits of stencil buffer
+the better), and can make use of the <i>KTX</i> or <i>WGL</i> extensions to speed up copy from/to the <i>zbuffer</i>.<br>
+
+Add a sound card to hear the music.
+</p>
+
+<h2>Download</h2>
+
+<ul>
+<li><a href="http://savannah.nongnu.org/files/?group=ensemblist">Download Page</a>
+</ul>
+
+<h2>Installation</h2>
+
+<h3>Libraries</h3>
+
+<p>The game needs the following libraries :</p>
+
+<ul>
+<li><a href="http://www.opengl.org">OpenGL</a> ;
+<li><a href="http://www.opengl.org">GLUT & GLU</a> ;
+<li><a href="http://www.libpng.org/pub/png/">libpng</a> ;
+<li><a href="http://www.mikmod.org">MikMod</a> ;
+</ul>
+
+<h3>Unix</h3>
+
+<p>There's a Makefile. Every C compiler should do without much trouble (if not without warnings).
+As usual :</p>
+<div class="shell">
+$ make<br>
+$ su -<br>
+$ make install<br>
+</div>
+<p>will install the game in <i>/usr/games</i> and <i>/usr/share/ensemblist</i>.<br>
+You may prefer <i>export DESTDIR=/somewhere/else</i> to change the base path of the installation.</p>
+
+<h3>MacOS</h3>
+
+<p>Same as above.<br>
+Use GNU tools for better results.</p>
+
+<h3>Windows</h3>
+
+<p>Some <i>.sln</i> and <i>.vcproj</i> files come with the tarball.<br>
+Do what you know you have to do with them, but consider running a real OS one of theses days.</p>
+
+<h2>Troubleshouting</h2>
+
+<p>For Unix/MacOsX, ask <a href="mailto:rixed@free.fr">rixed@free.fr</a> for some help.<br>
+For Windows, <s>bother</s> contact <a href="mailto:dom@tatm.com">dom@tatm.com</a>.</p>
+
+<br><br><br>
+</td></tr>
+</table>
+</body>
+</html>
