@@ -54,9 +54,10 @@ void sound_init(int active) {
 	unsigned i;
 	sound_on = active;
 	if (!sound_on) return;
-//	MikMod_RegisterAllDrivers();
 #ifdef _WINDOWS
 	MikMod_RegisterDriver(&drv_win);
+#elif __APPLE__ 
+	MikMod_RegisterAllDrivers();
 #else
 	MikMod_RegisterDriver(&drv_oss);
 #endif

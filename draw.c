@@ -51,12 +51,36 @@ void wgl_free() {
 static GLuint ktx_region;
 static char ktx_ok, wgl_ok;
 
-void *lglGetProcAddress(const char *name) {
+#ifdef __APPLE__
+#import <mach-o/dyld.h>
+#import <string.h>
+static void *NSGLGetProcAddress(const char *name)
+{
+	NSSymbol symbol;
+	char *symbolName;
+	// Prepend a '_' for the Unix C symbol mangling convention
+	symbolName = malloc (strlen (name) + 2);
+	strcpy(symbolName + 1, name);
+	symbolName[0] = '_';
+	symbol = NULL;
+	if (NSIsSymbolNameDefined (symbolName))
+		symbol = NSLookupAndBindSymbol (symbolName);
+	free (symbolName);
+	return symbol ? NSAddressOfSymbol (symbol) : NULL;
+}
+#endif
+
+static void *lglGetProcAddress(const char *name) {
 #ifdef _WIN32
 	void *t = (void*)wglGetProcAddress(name);
 	if (t == 0)
 		gltv_log_warning(GLTV_LOG_MUSTSEE, "wglGetProcAddress know nothing about '%s'", name);
-	return NULL; //t; krystal test
+	return NULL;
+#elif __APPLE__ 
+	void *t = (void*)NSGLGetProcAddress(name);
+	if (t == 0)
+		gltv_log_warning(GLTV_LOG_MUSTSEE, "NSGLGetProcAddress know nothing about '%s'", name);
+	return t;
 #else
 	void *t = (void*)glXGetProcAddressARB(name);
 	if (t == 0)

@@ -2,9 +2,10 @@
 
 	* Menu: translated to english.
 	* libCurl: more error checking.
+	* OS-X: added various modifications by jamie <tigital@mac.com> for OS-X.
 
 
 2003-04-16  Cedric Cellier  <rixed@free.fr>
 
-	* DevIl: no more dependances on devIl - load textures with libpng .
+	* DevIl: no more dependances on devIl - load textures with libpng.
 
