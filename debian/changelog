@@ -1,6 +1,7 @@
 ensemblist (0.0.20040309-1) unstable; urgency=low
 
   * split datas from binary
+  * addition of a menu entry
 
  -- Cedric Cellier (rixed) <rixed@free.fr>  Fri, 27 Feb 2004 22:15:00 +0100
 

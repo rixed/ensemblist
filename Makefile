@@ -33,6 +33,7 @@ install: $(NAME)
 	@echo '$(COL)$@$(NORM)'
 	@install -d $(DESTDIR)/usr/games
 	@install -m755 $(NAME) $(DESTDIR)/usr/games
+	@install -m644 $(NAME)_32x32.xpm $(DESTDIR)/usr/share/pixmap
 
 deb:
 	@# -i to filter out CVS and such from source
