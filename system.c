@@ -23,6 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //#include <assert.h>
 #ifndef _WINDOWS
 	#include <unistd.h>
+	#include <sys/stat.h>
+	#include <sys/types.h>
+	#include <fcntl.h>
 #else
 	#include <windows.h>
 	#include <direct.h>
@@ -45,6 +48,24 @@ int sys_goto_dir(const char *dir)
 		perror("chdir");
 		return 0;
 	}
+}
+
+int sys_make_dir(const char *dir)
+{
+#ifdef _WINDOWS
+	/* TODO */
+	return 0;
+#else
+	int ret;
+	struct stat stat_buf;
+	if (0==stat(dir, &stat_buf) && S_ISDIR(stat_buf)) return 1;	/* the directory already exists */
+	ret = mkdir(dir, 0700);
+	if (!ret) return 0;
+	else {
+		perror("mkdir");
+		return 0;
+	}
+#endif
 }
 
 int sys_get_user_name(char **dest)

@@ -833,23 +833,26 @@ void data_enigm_add(enigm *e)
 
 void data_save_all()
 {
-	FILE *file;
+	FILE *file = 0;
 	unsigned nb_enigms, i;
-
+/* non. n'écrire que la liste des enigms qui ont étées prises dans le user_dir et celles qui ont étées downloadées */
+/* eventuelement, virer le download d'énigmes, mais il reste l'éditeur */
+/* -> simple : ajouter un flag dans enigm pour savoir si c'est un niveau user, et dans ce cas l'écrire ici, en s'arrangeant pour etre alors dans le repertoire user */
 	if (NULL==(file=fopen("editable_enigms.lst","w+"))) gltv_log_warning(GLTV_LOG_MUSTSEE, "data_save_all: Cannot open editable_enigms.lst : %s", strerror(errno));
 	nb_enigms = gltv_slist_size(editable_enigms);
 	for (i=0; i<nb_enigms; i++) {
 		enigm *e = gltv_slist_get(editable_enigms, i);
-		fprintf(file, "%s.enigm\n", e->name);
+		if (file) fprintf(file, "%s.enigm\n", e->name);
 		data_enigm_del(e);
 	}
 	fclose(file);
 	gltv_slist_del(editable_enigms);
+	file = 0;
 	if (NULL==(file=fopen("enigms.lst","w+"))) gltv_log_warning(GLTV_LOG_MUSTSEE, "data_save_all: Cannot open enigms.lst : %s", strerror(errno));
 	nb_enigms = gltv_slist_size(enigms);
 	for (i=0; i<nb_enigms; i++) {
 		enigm *e = gltv_slist_get(enigms, i);
-		fprintf(file, "%s.enigm\n", e->name);
+		if (file) fprintf(file, "%s.enigm\n", e->name);
 		data_enigm_del(e);
 	}
 	fclose(file);
@@ -857,9 +860,34 @@ void data_save_all()
 	gltv_hash_del(enigm_primitives);	/* primitives themselves will be destroyed with the destruction of the hash primitives */
 }
 
+void data_read_enigms(const char *file_name, GLTV_SLIST enigm_list)
+{
+	FILE *file;
+	char line[LINE_LENGTH];
+	if (NULL==(file=fopen(file_name,"r"))) {
+		gltv_log_warning(GLTV_LOG_DEBUG, "data_read_enigms: Cannot open '%s' because : %s", file_name, strerror(errno));
+		return;
+	}
+	while (NULL!=fgets(line, LINE_LENGTH, file)) {
+		size_t len = strlen(line);
+		enigm *e;
+		if (len==0 || '\n'!=line[len-1]) {
+enigm_error:
+			gltv_log_fatal("data_load_enigms: Bad syntax");
+		}
+		if (len==1) continue;
+		line[--len] = '\0';
+		e = data_load_enigm(line);
+		if (NULL==e) goto enigm_error;
+		gltv_log_warning(GLTV_LOG_DEBUG, "data_read_enigms: Load enigm '%s' from '%s'\n", e->name, file_name);
+		gltv_slist_insert(enigm_list, e);
+	}
+	fclose(file);
+}
+
 void data_read_all()
 {
-	/* commencer par toutes les primitives */
+	/* start by all the geometry */
 	FILE *file1;
 	char line[LINE_LENGTH];
 	enigm_primitives = gltv_hash_new(30, 3, GLTV_HASH_OPT_SIZE|GLTV_HASH_STRKEYS);
@@ -879,41 +907,14 @@ prim_error:
 		gltv_hash_put(enigm_primitives, (unsigned)(m->name), m);
 		gltv_log_warning(GLTV_LOG_DEBUG, "Adding primitive '%s'\n", m->name);
 	}
-	/* ensuite toutes les enigmes */
+	fclose(file1);
+	/* then all enigms */
 	enigms = gltv_slist_new(40, 1, enigm_cmp);
 	editable_enigms = gltv_slist_new(30, 1, enigm_cmp);
 	if (!enigms || !editable_enigms) gltv_log_fatal("data_read_all: Cannot get slist");
-	if (NULL==(file1=fopen("enigms.lst","r"))) gltv_log_fatal("data_read_all: Cannot open enigms.lst : %s", strerror(errno));
-	while (NULL!=fgets(line, LINE_LENGTH, file1)) {
-		size_t len = strlen(line);
-		enigm *e;
-		if (len==0 || '\n'!=line[len-1]) {
-enigm_error:
-			gltv_log_fatal("data_load_all: Bad syntax");
-		}
-		if (len==1) continue;
-		line[--len] = '\0';
-		e = data_load_enigm(line);
-		if (NULL==e) goto enigm_error;
-		gltv_log_warning(GLTV_LOG_DEBUG, "Adding enigm '%s' to enigms\n", e->name);
-		gltv_slist_insert(enigms, e);
-	}
-	fclose(file1);
-	atexit(data_save_all);
-	if (NULL==(file1=fopen("editable_enigms.lst","r"))) {
-		gltv_log_warning(GLTV_LOG_DEBUG, "data_read_all: Cannot open editable_enigms.lst because : %s", strerror(errno));
-		return;
-	}
-	while (NULL!=fgets(line, LINE_LENGTH, file1)) {
-		size_t len = strlen(line);
-		enigm *e;
-		if (len==0 || '\n'!=line[len-1]) goto enigm_error;
-		if (len==1) continue;
-		line[--len] = '\0';
-		e = data_load_enigm(line);
-		if (NULL==e) goto enigm_error;
-		gltv_log_warning(GLTV_LOG_DEBUG, "Adding enigm '%s' to editable_enigms\n", e->name);
-		gltv_slist_insert(editable_enigms, e);
-	}
-	fclose(file1);
+	
+	data_read_enigms("enigms.lst", enigms);
+	data_read_enigms("editable_enigms.lst", editable_enigms);
+	//atexit(data_save_all);
 }
+

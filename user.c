@@ -24,9 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "memspool.h"
 #include "log.h"
 
-/* TODO : sauver/lire aussi les enigmes réussies */
-
-static char *user_file;
+static char *user_score_file;	/* score file */
 
 char *user_name;
 unsigned user_score;
@@ -39,28 +37,34 @@ void init_void_user()
 void user_save()
 {
 	FILE *file;
-	file = fopen(user_file, "w+");
+	file = fopen(user_score_file, "w+");
 	if (!file) {
-		gltv_log_warning(GLTV_LOG_MUSTSEE, "user_save: Cannot open file '%s' : %s", user_file, strerror(errno));
+		gltv_log_warning(GLTV_LOG_MUSTSEE, "user_save: Cannot open file '%s' : %s", user_score_file, strerror(errno));
 	} else {
 		if (fwrite(&user_score, sizeof(user_score), 1, file)<1) {
-			gltv_log_warning(GLTV_LOG_MUSTSEE, "user_save: Cannot write file '%s' : %s", user_file, strerror(errno));
+			gltv_log_warning(GLTV_LOG_MUSTSEE, "user_save: Cannot write file '%s' : %s", user_score_file, strerror(errno));
 		}
 	}
-	gltv_memspool_unregister(user_file);
+	gltv_memspool_unregister(user_score_file);
 }
 
 void user_read()
 {
 	char *user_dir;
-	FILE *file;
-	const char *filename =
+	const char *config_dir =
 #ifdef _WINDOWS
 		"\\.ensemblist";
 #else
 		"/.ensemblist";
 #endif
-	unsigned u, v;
+	FILE *file;
+	const char *score_file =
+#ifdef _WINDOWS
+		"\\score";
+#else
+		"/score";
+#endif
+	unsigned u, v, w;
 	if (!sys_get_user_name(&user_name)) {
 		gltv_log_warning(GLTV_LOG_MUSTSEE, "user_read: Cannot get user name");
 		user_name = "unknown";
@@ -71,24 +75,31 @@ void user_read()
 		init_void_user();
 		return;
 	}
-	atexit(user_save);
 	u = strlen(user_dir);
-	v = strlen(filename);
-	user_file = gltv_memspool_alloc(u+v+1);
-	if (!user_file) gltv_log_fatal("user_read: Cannot get memory\n");
-	memcpy(user_file, user_dir, u);
-	memcpy(user_file+u, filename, v+1);
-	file = fopen(user_file, "r");
+	v = strlen(config_dir);
+	w = strlen(score_file);
+	user_score_file = gltv_memspool_alloc(u+v+w+1);
+	if (!user_score_file) gltv_log_fatal("user_read: Cannot get memory\n");
+	memcpy(user_score_file, user_dir, u);
+	memcpy(user_score_file+u, config_dir, v+1);
+	if (!sys_make_dir(user_score_file)) {
+		gltv_log_warning(GLTV_LOG_MUSTSEE, "user_read: Cannot get user's config directory");
+		init_void_user();
+		return;
+	}
+	memcpy(user_score_file+u+v, score_file, w+1);
+	file = fopen(user_score_file, "r");
 	if (!file) {
 		init_void_user();
 		return;
 	}
 	if (fread(&user_score, sizeof(user_score), 1, file)<1) {
-		gltv_log_warning(GLTV_LOG_MUSTSEE, "user_read: Cannot read file '%s' : %s", user_file, strerror(errno));
+		gltv_log_warning(GLTV_LOG_MUSTSEE, "user_read: Cannot read file '%s' : %s", user_score_file, strerror(errno));
 		init_void_user();
 		return;
 	}
 	if (user_score==0) user_score = 1;
+	atexit(user_save);
 }
 
 
