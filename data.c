@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "stack.h"
 #include "memspool.h"
 #include "csg.h"
-#include "openil.h"
+#include "png2gl.h"
 #include "opengl.h"
 #include "log.h"
 #include "geom.h"
@@ -52,8 +52,7 @@ static void data_free_textures()
 texture *data_load_texture(const char *file_name)
 {
 	size_t len;
-	static char devil_needs_init = 1;
-	ILenum err;
+	static char png2gl_needs_init = 1;
 	texture *tex;
 	if (textures==NULL) {
 		textures = gltv_hash_new(30, 2, GLTV_HASH_STRKEYS);
@@ -62,10 +61,9 @@ texture *data_load_texture(const char *file_name)
 		}
 		atexit(data_free_textures);
 	}
-	if (devil_needs_init) {
-		ilInit();
-		ilutRenderer(ILUT_OPENGL);
-		devil_needs_init = 0;
+	if (png2gl_needs_init) {
+		png2gl_init();
+		png2gl_needs_init = 0;
 	}
 	if (gltv_hash_get(textures, (unsigned)file_name, (void**)&tex)) {
 		return tex;
@@ -75,14 +73,7 @@ texture *data_load_texture(const char *file_name)
 		gltv_log_warning(GLTV_LOG_MUSTSEE, "data_load_texture: Cannot get memory");
 		return NULL;
 	}
-	tex->binding = ilutGLLoadImage(file_name);
-	if ((err=ilGetError()) != IL_NO_ERROR) {
-		do {
-			gltv_log_warning(GLTV_LOG_MUSTSEE, "ilutGLLoadImages error %d", err);
-			err = ilGetError();
-		} while (err!=IL_NO_ERROR);
-		gltv_log_fatal("Error loading texture '%s'.", file_name);
-	}
+	tex->binding = png2gl_load_image(file_name);
 	glBindTexture(GL_TEXTURE_2D, tex->binding);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	/* basic config */
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -773,11 +764,9 @@ void data_enigm_finalize(enigm *e, char *solution)
 	size_t len = strlen(solution);
 	static char prim_is_used[NB_MAX_PRIMS_IN_TREE];
 	static char prim_name[NB_MAX_PRIMS_IN_TREE];
-	char *sol_save;
 	unsigned p, c, b;
 	e->solution = gltv_memspool_alloc(len+1);
-	sol_save = gltv_memspool_alloc(len+1);
-	if (!e->solution || !sol_save) gltv_log_fatal("data_enigm_finalize : Cannot get mem");
+	if (!e->solution) gltv_log_fatal("data_enigm_finalize : Cannot get mem");
 	memcpy(e->solution, solution, len+1);
 	for (p=0; p<e->nb_bricks; p++) {
 		prim_is_used[p] = 0;

@@ -15,13 +15,12 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
-#ifndef OPENIL_H
-#define OPENIL_H
+#ifndef PNG2GL_H
+#define PNG2GL_H
 
-/* devIl aka openIl */
-#include <IL/il.h>
-#include <IL/ilu.h>
-#include <IL/ilut.h>
+#include "opengl.h"
+
+void png2gl_init();
+GLuint png2gl_load_image(char*);
 
 #endif
-

@@ -4,11 +4,11 @@ CC=gcc
 ifdef DEBUG
 DATADIR=./datas
 COMPILE_FLAGS=-Wall -pedantic -fno-builtin -Wtraditional -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wredundant-decls -O0 -g `libmikmod-config --cflags` -DDATADIR=$(DATADIR)
-LINK_FLAGS=-g -lm -L /usr/X11R6/lib -lXmu -lGL -lglut -lGLU -L /usr/local/lib -lIL -lILU -lILUT `libmikmod-config --libs` -lefence -lpthread -lcurl
+LINK_FLAGS=-g -lm -L /usr/X11R6/lib -lXmu -lGL -lglut -lGLU -L /usr/local/lib -lpng `libmikmod-config --libs` -lefence -lpthread -lcurl
 else
 DATADIR=$(DESTDIR)/var/lib/$(NAME)
 COMPILE_FLAGS=-Wall -O3 -fomit-frame-pointer `libmikmod-config --cflags` -DNDEBUG -DDATADIR=$(DATADIR)
-LINK_FLAGS=-lm -L /usr/X11R6/lib -lXmu -lGL -lglut -lGLU -L /usr/local/lib -lIL -lILU -lILUT `libmikmod-config --libs` -lpthread -lcurl
+LINK_FLAGS=-lm -L /usr/X11R6/lib -lXmu -lGL -lglut -lGLU -L /usr/local/lib -lpng `libmikmod-config --libs` -lpthread -lcurl
 endif
 # uncomment if one of the above library needs it (may happens with devIl)
 MORE_LINK_FLAGS=-lSDL
