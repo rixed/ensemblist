@@ -95,39 +95,3 @@ int sys_get_user_dir(char **dest)
 #endif
 }
 
-/* NOT USED ANYMORE
-
-SYS_MUTEX sys_mutex_new()
-{
-	pthread_mutex_t *mutex = gltv_memspool_alloc(sizeof(*mutex));
-	pthread_mutex_init(mutex, NULL);
-	return mutex;
-}
-
-void sys_mutex_del(SYS_MUTEX mutex)
-{
-	pthread_mutex_destroy(mutex);
-	gltv_memspool_unregister(mutex);
-}
-
-int sys_mutex_blockget(SYS_MUTEX mutex)
-{
-	int ret = pthread_mutex_lock(mutex);
-	if (ret) gltv_log_warning(GLTV_LOG_MUSTSEE, "sys_mutex_blockget error : %s", strerror(ret));
-	return ret==0;
-}
-
-int sys_mutex_nonblockget(SYS_MUTEX mutex)
-{
-	int ret = pthread_mutex_trylock(mutex);
-	if (ret && ret!=EBUSY) gltv_log_warning(GLTV_LOG_MUSTSEE, "sys_mutex_nonblockget error : %s", strerror(ret));
-	return ret==0;
-}
-
-int sys_mutex_release(SYS_MUTEX mutex)
-{
-	int ret = pthread_mutex_unlock(mutex);
-	if (ret) gltv_log_warning(GLTV_LOG_MUSTSEE, "sys_mutex_release error : %s", strerror(ret));
-	return ret==0;
-}
-*/

@@ -1,5 +1,4 @@
 NAME=ensemblist
-CC=gcc
 ifdef DEBUG
 DATADIR=/home/rixed/src/ensemblist/datas
 COMPILE_FLAGS=-Wall -fno-builtin -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wredundant-decls -O0 -g `libmikmod-config --cflags` -DDATADIR=$(DATADIR)
