@@ -43,7 +43,8 @@ PFNWGLSAVEBUFFERREGIONARBPROC wglSaveBufferRegionARB = NULL;
 PFNWGLRESTOREBUFFERREGIONARBPROC wglRestoreBufferRegionARB = NULL;
 static HANDLE wgl_region;
 
-void wgl_free() {
+void wgl_free()
+{
 	wglDeleteBufferRegionARB(wgl_region);
 }
 #endif
@@ -70,7 +71,8 @@ static void *NSGLGetProcAddress(const char *name)
 }
 #endif
 
-static void *lglGetProcAddress(const char *name) {
+static void *lglGetProcAddress(const char *name)
+{
 #ifdef _WIN32
 	void *t = (void*)wglGetProcAddress(name);
 	if (t == 0)
@@ -89,12 +91,14 @@ static void *lglGetProcAddress(const char *name) {
 #endif
 }
 
-void ktx_free() {
+void ktx_free()
+{
 	glDeleteBufferRegion(ktx_region);
 }
 
 int with_ktx = 0, with_wgl = 0;
-void draw_init() {
+void draw_init()
+{
 	GLTV_WARN_LEVEL level = GLTV_LOG_OPTIONAL;
 	/* general info about opengl */
 	gltv_log_warning(GLTV_LOG_OPTIONAL, "OpenGl Vendor : %s", glGetString(GL_VENDOR));
@@ -148,7 +152,8 @@ void draw_init() {
 	}
 }
 
-void draw_primitive(primitive *prim) {
+void draw_primitive(primitive *prim)
+{
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, prim->points);
 	if (NULL!=prim->norms) {
@@ -158,7 +163,8 @@ void draw_primitive(primitive *prim) {
 	glDrawElements(GL_TRIANGLES, (int)prim->nb_faces*3, GL_UNSIGNED_INT, (void*)prim->faces);
 }
 
-void draw_mesh(mesh *m) {
+void draw_mesh(mesh *m)
+{
 	if (NULL!=m->texture && NULL!=m->uv_coord) {
 		glBindTexture(GL_TEXTURE_2D, m->texture->binding);
 		glEnable(GL_TEXTURE_2D);
@@ -172,7 +178,8 @@ void draw_mesh(mesh *m) {
 	draw_primitive(m->prim);
 }
 
-static void draw_node(csg_node *node) {
+static void draw_node(csg_node *node)
+{
 	/* draw the primitive, at the location */
 	assert(node->type == CSG_PRIM);
 	glPushMatrix();
@@ -196,7 +203,8 @@ static void free_buffers()
 	if (colorSave) gltv_memspool_unregister(colorSave);
 }
 
-static void zbuffer_save(b_box_2d *region) {
+static void zbuffer_save(b_box_2d *region)
+{
 	unsigned needed_size;
 	if (region->vide) return;
 	if (ktx_ok) {
@@ -226,7 +234,8 @@ static void zbuffer_save(b_box_2d *region) {
 	glReadPixels(region->xmin, region->ymin, region->xmax-region->xmin, region->ymax-region->ymin, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, depth_buffer);
 }
 
-void push_ortho_view(float left, float right, float bottom, float top, float znear, float zfar) {
+void push_ortho_view(float left, float right, float bottom, float top, float znear, float zfar)
+{
 	glPushMatrix();
 	glLoadIdentity();
 	glMatrixMode(GL_PROJECTION);
@@ -235,13 +244,15 @@ void push_ortho_view(float left, float right, float bottom, float top, float zne
 	glOrtho(left, right, bottom, top, znear, zfar);
 }
 
-void pop_view(void) {
+void pop_view(void)
+{
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
 }
 
-void zbuffer_restore(b_box_2d *region) {
+void zbuffer_restore(b_box_2d *region)
+{
 	if (region->vide) return;
 	if (ktx_ok) {
 		glDrawBufferRegion(ktx_region, region->xmin, region->ymin, region->xmax-region->xmin, region->ymax-region->ymin, region->xmin, region->ymin);
@@ -275,7 +286,8 @@ void zbuffer_restore(b_box_2d *region) {
 	glEnable(GL_STENCIL_TEST);
 }
 
-void zbuffer_clear(b_box_2d *region) {
+void zbuffer_clear(b_box_2d *region)
+{
 	if (region->vide) return;
 	push_ortho_view(0., (float)glut_fenLong, 0., (float)glut_fenHaut, 0., 1.);
 	glBegin(GL_QUADS);
@@ -287,7 +299,8 @@ void zbuffer_clear(b_box_2d *region) {
 	pop_view();
 }
 
-void copyDepthToColor() {
+void copyDepthToColor()
+{
 	int x, y;
 	GLfloat max, min;
 	GLint previousColorBuffer;
@@ -343,7 +356,8 @@ unsigned char stencilValueToColorMap[][3] = {
 	{255, 0, 218}
 };
 
-void copyStencilToColor() {
+void copyStencilToColor()
+{
 	int x, y;
 	GLint previousColorBuffer;
 	int winWidth = glut_fenLong, winHeight=glut_fenHaut;
@@ -394,7 +408,8 @@ void copyStencilToColor() {
 	pop_view();
 }
 
-void draw_b_box(csg_node *node) {
+void draw_b_box(csg_node *node)
+{
 	/* crado, debug only */
 	b_box b;
 	geom_get_b_box(node, &b);
@@ -421,7 +436,8 @@ void draw_b_box(csg_node *node) {
 	glEnd();
 }
 
-void draw_union_of_partial_products(csg_union_of_partial_products *uopp) {
+void draw_union_of_partial_products(csg_union_of_partial_products *uopp)
+{
 	/* On ne peut pas tracer les partiels indendament des groupes, car le zbuffer doit etre integre entre deux vraies unions
 	 * (les unions entre les partiels sont des fausses unions justement en ce sens : le zbuffer ne contient pas d'info sur ces unions).
 	 * Donc entre deux groupes on DOIT sauver/restaurer le zbuffer.
@@ -561,21 +577,24 @@ void draw_union_of_partial_products(csg_union_of_partial_products *uopp) {
 	glDisable(GL_STENCIL_TEST);
 }
 
-void draw_union_of_products(csg_union_of_products *uop) {
+void draw_union_of_products(csg_union_of_products *uop)
+{
 	/* this convertion should be done earlyer */
 	csg_union_of_partial_products *uopp = csg_union_of_partial_products_new(uop);
 	if (NULL!=uopp) draw_union_of_partial_products(uopp);
 	csg_union_of_partial_products_del(uopp);
 }
 
-void draw_csg_tree(csg_node *node) {
+void draw_csg_tree(csg_node *node)
+{
 	/* this convertion should be done earlyer */
 	csg_union_of_products *uop = csg_union_of_products_new(node);
 	if (NULL!=uop) draw_union_of_products(uop);
 	csg_union_of_products_del(uop);
 }
 
-void draw_position(position *pos) {
+void draw_position(position *pos)
+{
 	unsigned s;
 	glPushMatrix();
 	glMultMatrixf(pos->c);
