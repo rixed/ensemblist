@@ -9,13 +9,6 @@
 
 
 
-CFLAGS = -Wall -g
-
-ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -O0
-else
-	CFLAGS += -O2
-endif
 ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
 	INSTALL_PROGRAM += -s
 endif
@@ -35,7 +28,6 @@ build-stamp: configure-stamp
 
 	# Add here commands to compile the package.
 	$(MAKE)
-	#/usr/bin/docbook-to-man debian/ensemblist.sgml > ensemblist.1
 
 	touch build-stamp
 
@@ -70,24 +62,11 @@ binary-arch: build install
 	dh_installchangelogs Changelog
 	dh_installdocs html
 	dh_installexamples
-#	dh_install
-#	dh_installmenu
-#	dh_installdebconf	
-#	dh_installlogrotate
-#	dh_installemacsen
-#	dh_installpam
-#	dh_installmime
-#	dh_installinit
-#	dh_installcron
-#	dh_installinfo
 	dh_installman ensemblist.6
 	dh_link
 	dh_strip
 	dh_compress
 	dh_fixperms
-#	dh_perl
-#	dh_python
-#	dh_makeshlibs
 	dh_installdeb
 	dh_shlibdeps
 	dh_gencontrol

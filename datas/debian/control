@@ -1,17 +1,20 @@
-Source: ensemblist
+Source: ensemblist-data
 Section: games
 Priority: optional
 Maintainer: Cedric Cellier <rixed@free.fr>
-Build-Depends: debhelper (>= 4.0.0), xlibs-dev, libgl-dev | xlibmesa-dev, xlibmesa-dev | xlibmesa-glu-dev | glutg3-dev, libpng-dev, libmikmod2-dev, libc6-dev
+Build-Depends: debhelper (>= 4.0.0)
 Standards-Version: 3.6.0
 
-Package: ensemblist
+Package: ensemblist-data
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: A puzzle game where you build 3d shapes using CSG
+Depends: ${shlibs:Depends}, ${misc:Depends}, ensemblist
+Description: Data for ensemblist, a puzzle game where you build 3d shapes using CSG
  Ensemblist is a 3d puzzle game where you have to build 3d shapes
  by combining simplier shapes using Constructive Solid Geometry
  operators Union, Intersection and Soustraction.
  .
  CSG are GPU intensive, so a recent 3d card is needed (like, say,
  any geForce card).
+ .
+ This is the data package
+
