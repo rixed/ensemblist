@@ -19,8 +19,7 @@ use them to reassemble the pieces and retrieve others.
 
 requirements
 
-opengl, glu, glut, openil (aka devil), mikmod, libcurl, a mouse with two buttons
-and two fingers.
+opengl, glu, glut, mikmod, libcurl, libpng, a mouse with a button.
 8 bits of stencil buffer will help, as will the GL_KTX_buffer_region openGl
 extention when this hack will be debugged.
 
