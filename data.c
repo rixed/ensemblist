@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "opengl.h"
 #include "log.h"
 #include "geom.h"
+#include "user.h"
+#include "main.h"
 
 GLTV_HASH enigm_primitives;	/* loaded primitives for enigms */
 GLTV_SLIST enigms;
@@ -809,6 +811,7 @@ void data_enigm_save(enigm *e)
 	size_t len = strlen(e->name);
 	FILE *file;
 	unsigned p;
+	if (!sys_goto_dir(user_rc_dir)) return;	// so bad
 	memcpy(file_name, e->name, len);
 	memcpy(file_name+len, ".enigm", 7);
 	file = fopen(file_name, "w+");
@@ -824,6 +827,7 @@ void data_enigm_save(enigm *e)
 	}
 	fprintf(file, "solution\n%s\n", e->solution);
 	fclose(file);
+	sys_goto_dir(XSTR(DATADIR));
 }
 
 void data_enigm_add(enigm *e)
@@ -834,9 +838,16 @@ void data_enigm_add(enigm *e)
 void data_save_all()
 {
 	/* we save in userland directory the enigms created by the user, ie enigms curently in edition mode and free enigms */ 
-	FILE *file = 0;
+	FILE *file;
 	unsigned nb_enigms, i;
-	if (NULL==(file=fopen("editable_enigms.lst","w+"))) gltv_log_warning(GLTV_LOG_MUSTSEE, "data_save_all: Cannot open editable_enigms.lst : %s", strerror(errno));
+	char no_save = 0;
+	if (!sys_goto_dir(user_rc_dir)) no_save = 1;
+	if (!no_save) {
+		file=fopen("editable_enigms.lst","w+");
+	}
+	if (!file) {
+		gltv_log_warning(GLTV_LOG_MUSTSEE, "data_save_all: Cannot open editable_enigms.lst : %s", strerror(errno));
+	}
 	nb_enigms = gltv_slist_size(editable_enigms);
 	for (i=0; i<nb_enigms; i++) {
 		enigm *e = gltv_slist_get(editable_enigms, i);
@@ -846,7 +857,12 @@ void data_save_all()
 	if (file) fclose(file);
 	gltv_slist_del(editable_enigms);
 	file = 0;
-	if (NULL==(file=fopen("enigms.lst","w+"))) gltv_log_warning(GLTV_LOG_MUSTSEE, "data_save_all: Cannot open enigms.lst : %s", strerror(errno));
+	if (!no_save) {
+		file=fopen("enigms.lst","w+");
+	}
+	if (!file) {
+		gltv_log_warning(GLTV_LOG_MUSTSEE, "data_save_all: Cannot open enigms.lst : %s", strerror(errno));
+	}
 	nb_enigms = gltv_slist_size(enigms);
 	for (i=0; i<nb_enigms; i++) {
 		enigm *e = gltv_slist_get(enigms, i);
@@ -856,6 +872,7 @@ void data_save_all()
 	if (file) fclose(file);
 	gltv_slist_del(enigms);
 	gltv_hash_del(enigm_primitives);	/* primitives themselves will be destroyed with the destruction of the hash primitives */
+	sys_goto_dir(XSTR(DATADIR));
 }
 
 void data_read_enigms(const char *file_name, GLTV_SLIST enigm_list)

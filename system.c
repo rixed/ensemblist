@@ -58,7 +58,7 @@ int sys_make_dir(const char *dir)
 #else
 	int ret;
 	struct stat stat_buf;
-	if (0==stat(dir, &stat_buf) && S_ISDIR(stat_buf)) return 1;	/* the directory already exists */
+	if (0==stat(dir, &stat_buf) && S_ISDIR(stat_buf.st_mode)) return 1;	/* the directory already exists */
 	ret = mkdir(dir, 0700);
 	if (!ret) return 0;
 	else {

@@ -46,6 +46,7 @@ void user_save()
 		}
 	}
 	gltv_memspool_unregister(user_score_file);
+	gltv_memspool_unregister(user_rc_dir);
 }
 
 void user_read()
@@ -88,6 +89,7 @@ void user_read()
 		init_void_user();
 		return;
 	}
+	atexit(user_save);
 	memcpy(user_score_file, user_rc_dir, u+v);
 	memcpy(user_score_file+u+v, score_file, w+1);
 	file = fopen(user_score_file, "r");
@@ -101,7 +103,6 @@ void user_read()
 		return;
 	}
 	if (user_score==0) user_score = 1;
-	atexit(user_save);
 }
 
 

@@ -29,10 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "sound.h"
 #include "user.h"
 
-#define STR(x) #x
-#define XSTR(x) STR(x)
 #define NAME "Ensemblist"
-#define VERSION "20030310"
+#define VERSION "20031016"
 #ifdef NDEBUG
 #define DEBUGSTR ""
 #else
@@ -210,17 +208,19 @@ int main(int nb_args, char **args) {
 	gltv_memspool_init(150000);
 	atexit(gltv_memspool_end);
 	if (!sys_goto_dir(XSTR(DATADIR))) {
+error_chdir1:
 		gltv_log_fatal("Cannot chdir to " XSTR(DATADIR));
 	}
 	/* read user's file */
 	user_read();
 	/* read data files (primitives, enigms) */
-	data_read_all_global();
+	data_read_all();
 	/* then userland additionnal enigms */
 	if (!sys_goto_dir(user_rc_dir)) {
 		gltv_log_fatal("Cannot chdir to %s", user_rc_dir);
 	}
 	data_read_userland();
+	if (!sys_goto_dir(XSTR(DATADIR))) goto error_chdir1;	// go back to datadir so that the modes can load things.
 	/* sound init */
 	sound_init(with_sounds);
 	atexit(sound_end);

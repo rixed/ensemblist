@@ -31,4 +31,7 @@ extern unsigned long glut_mtime;
 
 extern void convert_pixel_to_percent(int x, int y, float *xx, float *yy);
 
+#define STR(x) #x
+#define XSTR(x) STR(x)
+
 #endif

@@ -1,14 +1,13 @@
 NAME=ensemblist
-#CC=gcc-3.0
 CC=gcc
 ifdef DEBUG
-DATADIR=./datas
-COMPILE_FLAGS=-Wall -pedantic -fno-builtin -Wtraditional -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wredundant-decls -O0 -g `libmikmod-config --cflags` -DDATADIR=$(DATADIR)
-LINK_FLAGS=-g -lm -L /usr/X11R6/lib -lXmu -lGL -lglut -lGLU -L /usr/local/lib -lpng `libmikmod-config --libs` -lefence -lpthread -lcurl
+DATADIR=/home/rixed/src/ensemblist/datas
+COMPILE_FLAGS=-Wall -fno-builtin -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wredundant-decls -O0 -g `libmikmod-config --cflags` -DDATADIR=$(DATADIR)
+LINK_FLAGS=-g -lm -L /usr/X11R6/lib -lXmu -lGL -lglut -lGLU -L /usr/local/lib -lpng `libmikmod-config --libs` -lefence -lpthread
 else
-DATADIR=$(DESTDIR)/var/lib/$(NAME)
+DATADIR=$(DESTDIR)/usr/share/$(NAME)
 COMPILE_FLAGS=-Wall -O3 -fomit-frame-pointer `libmikmod-config --cflags` -DNDEBUG -DDATADIR=$(DATADIR)
-LINK_FLAGS=-lm -L /usr/X11R6/lib -lXmu -lGL -lglut -lGLU -L /usr/local/lib -lpng `libmikmod-config --libs` -lpthread -lcurl
+LINK_FLAGS=-lm -L /usr/X11R6/lib -lXmu -lGL -lglut -lGLU -L /usr/local/lib -lpng `libmikmod-config --libs` -lpthread
 endif
 APPLE_FRAMEWORKS=-framework GLUT -framework Cocoa -framework OpenGL
 #uncomment the following if you want to compile on MacOS/X
@@ -55,7 +54,7 @@ $(DATADIR):
 
 install: $(NAME) $(DATADIR)
 	@echo '$(COL)$@$(NORM)'
-	@cp -f $(NAME) $(DESTDIR)/usr/local/games/
+	@cp -f $(NAME) $(DESTDIR)/usr/games/
 	@cp -f datas/* $(DATADIR)
 	@chmod a+wx $(DATADIR)
 	@chmod a+wx $(DATADIR)/enigms.lst
