@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef USER_H
 #define USER_H
 
+extern char *user_rc_dir;
 extern char *user_name;
 extern unsigned user_score;
 

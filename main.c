@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "opengl.h"
 #include "sound.h"
 #include "user.h"
-#include "share.h"
 
 #define STR(x) #x
 #define XSTR(x) STR(x)
@@ -194,14 +193,11 @@ int main(int nb_args, char **args) {
 			with_ktx = 1;
 		} else if (0==strncasecmp(args[a], "--wgl", 5)) {
 			with_wgl = 1;
-		} else if (0==strncasecmp(args[a], "--no-net", 5)) {
-			with_net = 0;
 		} else if (0==strncasecmp(args[a], "--help", 6)) {
-			printf("\n%s [--silent] [--debug] [--ktx | --wgl] [--no-net] [--help]\n\n" \
+			printf("\n%s [--silent] [--debug] [--ktx | --wgl] [--help]\n\n" \
 					"  --silent : no sound\n" \
 					"  --debug : verbose\n" \
 					"  --ktx --wgl : use one of these extentions (do not)\n" \
-					"  --no-net : disable the http get of new enigms\n" \
 					"  --help : this\n\n", args[0]);
 			exit(0);
 		} else {
@@ -214,14 +210,17 @@ int main(int nb_args, char **args) {
 	gltv_memspool_init(150000);
 	atexit(gltv_memspool_end);
 	if (!sys_goto_dir(XSTR(DATADIR))) {
-		gltv_log_fatal("Cannot find datas directory " XSTR(DATADIR));
+		gltv_log_fatal("Cannot chdir to " XSTR(DATADIR));
 	}
 	/* read user's file */
 	user_read();
 	/* read data files (primitives, enigms) */
-	data_read_all();
-	/* get more from http */
-	share();
+	data_read_all_global();
+	/* then userland additionnal enigms */
+	if (!sys_goto_dir(user_rc_dir)) {
+		gltv_log_fatal("Cannot chdir to %s", user_rc_dir);
+	}
+	data_read_userland();
 	/* sound init */
 	sound_init(with_sounds);
 	atexit(sound_end);

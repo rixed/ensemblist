@@ -96,6 +96,15 @@ void ktx_free()
 	glDeleteBufferRegion(ktx_region);
 }
 
+Display *display;
+GLXPbuffer pbuffer;
+GLXDrawable current_read, current_draw;
+GLXContext current_context;
+void pbuffer_free()
+{
+	glXDestroyPbuffer(display, pbuffer);
+}
+
 int with_ktx = 0, with_wgl = 0;
 void draw_init()
 {
@@ -113,6 +122,84 @@ void draw_init()
 	if (stencil_size<4) level = GLTV_LOG_MUSTSEE;
 	gltv_log_warning(level, "Stencil size : %d bits\n", stencil_size);
 	ktx_ok = 0;
+	
+	{
+		int i;
+		const char *displayName = ":0";
+		int screen;
+		int numFbConfigs=0;
+		GLXFBConfig* fbConfigs=0;
+		int glxFBConfigAttributes[]={GLX_DRAWABLE_TYPE,GLX_PBUFFER_BIT, GLX_DEPTH_SIZE,16, GLX_DOUBLEBUFFER,False, GLX_STEREO,False, GLX_CONFIG_CAVEAT,GLX_NONE, GLX_TRANSPARENT_TYPE,GLX_NONE, None};
+		display=XOpenDisplay(displayName);
+		if (!display) fprintf(stderr,"Connection to X server on display %s refused.\n",displayName);
+		screen=DefaultScreen(display);
+		fbConfigs = glXChooseFBConfig(display,screen,glxFBConfigAttributes,&numFbConfigs);
+		fprintf(stderr,"Found %d FBConfigs\n", numFbConfigs);
+		if (!fbConfigs) fprintf(stderr,"No matching frame buffer configurations found 1.\n");
+		if (!numFbConfigs) fprintf(stderr,"No matching frame buffer configurations found 2.\n");
+		current_read = glXGetCurrentReadDrawable();
+		current_draw = glXGetCurrentDrawable();
+		current_context = glXGetCurrentContext();
+		for (i=0; i<numFbConfigs; i++) {
+			/* TODO: set preserve content to false and grab Xserver between save and restore */
+			int glxPbufferAttributes[]={GLX_PBUFFER_WIDTH,glut_fenLong, GLX_PBUFFER_HEIGHT,glut_fenHaut, GLX_LARGEST_PBUFFER,True, GLX_PRESERVED_CONTENTS,False, None};
+			
+			int value;
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_BUFFER_SIZE, &value);
+			printf("\n\nFBConfig :\nBuffer Size=%d\n", value);
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_RED_SIZE, &value);
+			printf("Red Size=%d\n", value);
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_GREEN_SIZE, &value);
+			printf("Green Size=%d\n", value);
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_BLUE_SIZE, &value);
+			printf("Blue Size=%d\n", value);
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_ALPHA_SIZE, &value);
+			printf("Alpha Size=%d\n", value);
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_DEPTH_SIZE, &value);
+			printf("Depth Size=%d\n", value);
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_STENCIL_SIZE, &value);
+			printf("Stencil Size=%d\n", value);
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_LEVEL, &value);
+			printf("Level=%d\n", value);
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_DOUBLEBUFFER, &value);
+			printf("Double Buffer=%d\n", value);
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_RENDER_TYPE, &value);
+			printf("Render type = rgba ? %s\n", (value==GLX_RGBA_BIT?"True":"False"));
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_DRAWABLE_TYPE, &value);
+			printf("Drawable = window ? %s\n", (value==GLX_WINDOW_BIT?"True":"False"));
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_X_RENDERABLE, &value);
+			printf("X Renderable=%d\n", value);
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_X_VISUAL_TYPE, &value);
+			printf("X Visual type=%d\n", value);
+			glXGetFBConfigAttrib(display, fbConfigs[i], GLX_CONFIG_CAVEAT, &value);
+			printf("Config caveat=%d\n", value);
+
+			pbuffer= glXCreatePbuffer(display, fbConfigs[i], glxPbufferAttributes);
+			if (pbuffer!=None) {
+				XFree(fbConfigs);
+				atexit(pbuffer_free);
+				break;
+			}
+			printf("Skip FBConfig...\n");
+		}
+		if (True==glXIsDirect(display, glXGetCurrentContext())) {
+			printf("Current context is direct\n");
+		} else {
+			printf("Current context is NOT direct\n");
+		}
+		{
+			unsigned width, height, preserved, largest, fbc;
+			glXQueryDrawable(display, pbuffer, GLX_WIDTH, &width);
+			glXQueryDrawable(display, pbuffer, GLX_HEIGHT, &height);
+			glXQueryDrawable(display, pbuffer, GLX_PRESERVED_CONTENTS, &preserved);
+			glXQueryDrawable(display, pbuffer, GLX_LARGEST_PBUFFER, &largest);
+			glXQueryDrawable(display, pbuffer, GLX_FBCONFIG_ID, &fbc);
+			printf("Infos : width=%u height=%u preserved=%s largest=%s\n", width, height, (preserved==True?"True":"False"), (largest==True?"True":"False"));
+			
+		}
+		return;
+	}
+	
 	if (with_ktx) {
 		/* get KTX functions */
 		glNewBufferRegion = (PFNGLNEWBUFFERREGIONPROC)lglGetProcAddress("glNewBufferRegion");
@@ -203,37 +290,6 @@ static void free_buffers()
 	if (colorSave) gltv_memspool_unregister(colorSave);
 }
 
-static void zbuffer_save(b_box_2d *region)
-{
-	unsigned needed_size;
-	if (region->vide) return;
-	if (ktx_ok) {
-		glReadBufferRegion(ktx_region, region->xmin, region->ymin, region->xmax-region->xmin, region->ymax-region->ymin);
-		return;
-#ifdef _WIN32
-	} else if (wgl_ok) {
-		if (GL_TRUE==wglSaveBufferRegionARB(wgl_region, region->xmin, region->ymin, region->xmax-region->xmin, region->ymax-region->ymin)) {
-			buffer_region_succeeded = 1;
-			return;
-		} else {
-			buffer_region_succeeded = 0;
-		}
-#endif
-	}
-	needed_size = (region->xmax-region->xmin)*(region->ymax-region->ymin)*sizeof(GLuint);
-	if (NULL == depth_buffer) {
-		depth_buffer = gltv_memspool_alloc(needed_size);
-		if (!depth_buffer) gltv_log_fatal("Cannot get memory for saving depth buffer");
-		buffer_size = needed_size;
-		atexit(free_buffers);
-	} else if (buffer_size<needed_size) {
-		depth_buffer = gltv_memspool_realloc(depth_buffer, needed_size);
-		if (!depth_buffer) gltv_log_fatal("Cannot get memory for saving depth buffer");
-		buffer_size = needed_size;
-	}
-	glReadPixels(region->xmin, region->ymin, region->xmax-region->xmin, region->ymax-region->ymin, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, depth_buffer);
-}
-
 void push_ortho_view(float left, float right, float bottom, float top, float znear, float zfar)
 {
 	glPushMatrix();
@@ -251,6 +307,57 @@ void pop_view(void)
 	glPopMatrix();
 }
 
+static void zbuffer_save(b_box_2d *region)
+{
+	unsigned needed_size;
+	if (region->vide) return;
+	if (ktx_ok) {
+		glReadBufferRegion(ktx_region, region->xmin, region->ymin, region->xmax-region->xmin, region->ymax-region->ymin);
+		return;
+#ifdef _WIN32
+	} else if (wgl_ok) {
+		if (GL_TRUE==wglSaveBufferRegionARB(wgl_region, region->xmin, region->ymin, region->xmax-region->xmin, region->ymax-region->ymin)) {
+			buffer_region_succeeded = 1;
+			return;
+		} else {
+			buffer_region_succeeded = 0;
+		}
+#endif
+	}
+
+	{
+		glXMakeContextCurrent(display, pbuffer, current_read, current_context);
+		glDrawBuffer(GL_FRONT);
+		glReadBuffer(GL_BACK);
+		glDisable(GL_STENCIL_TEST);
+		glColorMask(0, 0, 0, 0);
+		glDepthMask(1);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_ALWAYS);
+		push_ortho_view(0., (float)glut_fenLong, 0., (float)glut_fenHaut, 0., 1.);
+		glRasterPos3f(region->xmin, region->ymin, -.5);
+		glCopyPixels(region->xmin, region->ymax, region->xmax-region->xmin, region->ymax-region->ymin, GL_DEPTH);
+		glXMakeContextCurrent(display, current_draw, current_read, current_context);
+		pop_view();
+		glDepthFunc(GL_LESS);
+		glEnable(GL_STENCIL_TEST);
+	}
+	return;
+	
+	needed_size = (region->xmax-region->xmin)*(region->ymax-region->ymin)*sizeof(GLuint);
+	if (NULL == depth_buffer) {
+		depth_buffer = gltv_memspool_alloc(needed_size);
+		if (!depth_buffer) gltv_log_fatal("Cannot get memory for saving depth buffer");
+		buffer_size = needed_size;
+		atexit(free_buffers);
+	} else if (buffer_size<needed_size) {
+		depth_buffer = gltv_memspool_realloc(depth_buffer, needed_size);
+		if (!depth_buffer) gltv_log_fatal("Cannot get memory for saving depth buffer");
+		buffer_size = needed_size;
+	}
+	glReadPixels(region->xmin, region->ymin, region->xmax-region->xmin, region->ymax-region->ymin, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, depth_buffer);
+}
+
 void zbuffer_restore(b_box_2d *region)
 {
 	if (region->vide) return;
@@ -263,6 +370,26 @@ void zbuffer_restore(b_box_2d *region)
 		return;
 #endif
 	}
+
+	{
+		glXMakeContextCurrent(display, current_draw, pbuffer, current_context);
+		glDrawBuffer(GL_BACK);
+		glReadBuffer(GL_FRONT);
+		glDisable(GL_STENCIL_TEST);
+		glColorMask(0, 0, 0, 0);
+		glDepthMask(1);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_ALWAYS);
+		push_ortho_view(0., (float)glut_fenLong, 0., (float)glut_fenHaut, 0., 1.);
+		glRasterPos3f(region->xmin, region->ymin, -.5);
+		glCopyPixels(region->xmin, region->ymax, region->xmax-region->xmin, region->ymax-region->ymin, GL_DEPTH);
+		glXMakeContextCurrent(display, current_draw, current_read, current_context);
+		pop_view();
+		glDepthFunc(GL_LESS);
+		glEnable(GL_STENCIL_TEST);
+	}
+	return;
+	
 	glDisable(GL_STENCIL_TEST);
 	glColorMask(0, 0, 0, 0);
 	glDepthMask(1);

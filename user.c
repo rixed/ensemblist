@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "log.h"
 
 static char *user_score_file;	/* score file */
-
+char *user_rc_dir;
 char *user_name;
 unsigned user_score;
 
@@ -78,15 +78,17 @@ void user_read()
 	u = strlen(user_dir);
 	v = strlen(config_dir);
 	w = strlen(score_file);
+	user_rc_dir = gltv_memspool_alloc(u+v+1);
 	user_score_file = gltv_memspool_alloc(u+v+w+1);
-	if (!user_score_file) gltv_log_fatal("user_read: Cannot get memory\n");
-	memcpy(user_score_file, user_dir, u);
-	memcpy(user_score_file+u, config_dir, v+1);
-	if (!sys_make_dir(user_score_file)) {
+	if (!user_rc_dir || !user_score_file) gltv_log_fatal("user_read: Cannot get memory\n");
+	memcpy(user_rc_dir, user_dir, u);
+	memcpy(user_rc_dir+u, config_dir, v+1);
+	if (!sys_make_dir(user_rc_dir)) {
 		gltv_log_warning(GLTV_LOG_MUSTSEE, "user_read: Cannot get user's config directory");
 		init_void_user();
 		return;
 	}
+	memcpy(user_score_file, user_rc_dir, u+v);
 	memcpy(user_score_file+u+v, score_file, w+1);
 	file = fopen(user_score_file, "r");
 	if (!file) {

@@ -101,6 +101,7 @@ extern GLTV_SLIST enigms, editable_enigms;	/* sorted by score */
 /* calls */
 
 extern void data_read_all();
+extern void data_read_userland();
 extern texture *data_load_texture(const char *);
 extern mesh *data_load_mesh(const char *, int);
 extern void data_bind_mesh(position *, mesh *);

@@ -833,11 +833,9 @@ void data_enigm_add(enigm *e)
 
 void data_save_all()
 {
+	/* we save in userland directory the enigms created by the user, ie enigms curently in edition mode and free enigms */ 
 	FILE *file = 0;
 	unsigned nb_enigms, i;
-/* non. n'écrire que la liste des enigms qui ont étées prises dans le user_dir et celles qui ont étées downloadées */
-/* eventuelement, virer le download d'énigmes, mais il reste l'éditeur */
-/* -> simple : ajouter un flag dans enigm pour savoir si c'est un niveau user, et dans ce cas l'écrire ici, en s'arrangeant pour etre alors dans le repertoire user */
 	if (NULL==(file=fopen("editable_enigms.lst","w+"))) gltv_log_warning(GLTV_LOG_MUSTSEE, "data_save_all: Cannot open editable_enigms.lst : %s", strerror(errno));
 	nb_enigms = gltv_slist_size(editable_enigms);
 	for (i=0; i<nb_enigms; i++) {
@@ -845,17 +843,17 @@ void data_save_all()
 		if (file) fprintf(file, "%s.enigm\n", e->name);
 		data_enigm_del(e);
 	}
-	fclose(file);
+	if (file) fclose(file);
 	gltv_slist_del(editable_enigms);
 	file = 0;
 	if (NULL==(file=fopen("enigms.lst","w+"))) gltv_log_warning(GLTV_LOG_MUSTSEE, "data_save_all: Cannot open enigms.lst : %s", strerror(errno));
 	nb_enigms = gltv_slist_size(enigms);
 	for (i=0; i<nb_enigms; i++) {
 		enigm *e = gltv_slist_get(enigms, i);
-		if (file) fprintf(file, "%s.enigm\n", e->name);
+		if (file && 0==e->score) fprintf(file, "%s.enigm\n", e->name);
 		data_enigm_del(e);
 	}
-	fclose(file);
+	if (file) fclose(file);
 	gltv_slist_del(enigms);
 	gltv_hash_del(enigm_primitives);	/* primitives themselves will be destroyed with the destruction of the hash primitives */
 }
@@ -912,9 +910,14 @@ prim_error:
 	enigms = gltv_slist_new(40, 1, enigm_cmp);
 	editable_enigms = gltv_slist_new(30, 1, enigm_cmp);
 	if (!enigms || !editable_enigms) gltv_log_fatal("data_read_all: Cannot get slist");
-	
+	atexit(data_save_all);
 	data_read_enigms("enigms.lst", enigms);
 	data_read_enigms("editable_enigms.lst", editable_enigms);
-	//atexit(data_save_all);
+}
+
+void data_read_userland()
+{
+	data_read_enigms("enigms.lst", enigms);
+	data_read_enigms("editable_enigms.lst", editable_enigms);
 }
 
