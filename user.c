@@ -54,7 +54,12 @@ void user_read()
 {
 	char *user_dir;
 	FILE *file;
-	const char *filename = "/.ensemblist";
+	const char *filename =
+#ifdef _WINDOWS
+		"\\.ensemblist";
+#else
+		"/.ensemblist";
+#endif
 	unsigned u, v;
 	if (!sys_get_user_name(&user_name)) {
 		gltv_log_warning(GLTV_LOG_MUSTSEE, "user_read: Cannot get user name");

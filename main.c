@@ -211,12 +211,12 @@ int main(int nb_args, char **args) {
 	gltv_log_init(debug_level);
 	gltv_memspool_init(150000);
 	atexit(gltv_memspool_end);
-	/* read user's file */
-	user_read();
-	/* read data files (primitives, enigms) */
 	if (!sys_goto_dir(XSTR(DATADIR))) {
 		gltv_log_fatal("Cannot find datas directory " XSTR(DATADIR));
 	}
+	/* read user's file */
+	user_read();
+	/* read data files (primitives, enigms) */
 	data_read_all();
 	/* get more from http */
 	share();
