@@ -8,17 +8,16 @@ Standards-Version: 3.6.0
 Package: ensemblist
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ensemblist-data
-Description: A puzzle game where you build 3d shapes using CSG
- Ensemblist is a 3d puzzle game where you have to build 3d shapes
- by combining simplier shapes using Constructive Solid Geometry
- operators Union, Intersection and Soustraction.
+Description: A puzzle game where you build 3D shapes using CSG
+ Ensemblist is a 3D puzzle game where you have to build 3D shapes
+ by combining basic shapes using Constructive Solid Geometry
+ operators Union, Intersection, and Cut.
  .
- CSG are GPU intensive, so a recent 3d card is needed (like, say,
- any geForce card).
+ CSG is GPU intensive, so a recent 3D card is needed.
 
 Package: ensemblist-data
 Architecture: all
 Description: Data files for Ensemblist
  This package holds the data files necessary to play Ensemblist,
- a 3D puzzle game where you build 3d shapes by CSG combinaisons.
+ a 3D puzzle game where you build 3D shapes by CSG combinaitions.
 
