@@ -15,3 +15,10 @@ Description: A puzzle game where you build 3d shapes using CSG
  .
  CSG are GPU intensive, so a recent 3d card is needed (like, say,
  any geForce card).
+
+Package: ensemnblist-data
+Architecture: all
+Description: Data files for Ensemblist
+ This package holds the data files necessary to play Ensemblist,
+ a 3D puzzle game where you build 3d shapes by CSG combinaisons.
+
