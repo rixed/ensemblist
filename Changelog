@@ -1,0 +1,9 @@
+2003-04-17  Cedric Cellier  <rixed@free.fr>
+
+	* Menu: translated to english.
+
+
+2003-04-16  Cedric Cellier  <rixed@free.fr>
+
+	* DevIl: no more dependances on devIl - load textures with libpng .
+

@@ -854,7 +854,7 @@ void intro_clic(int button, int state)
 	s = selected_x*1000+selected_y;
 	switch (s) {
 		/* menu de depart */
-		case 4030:	/* quit */
+		case 5030:	/* quit */
 			target_id=1;
 			quit=1;
 			break;

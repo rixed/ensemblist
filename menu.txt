@@ -22,14 +22,14 @@
                                                                       *---------------------------\
                                                                       |                           !
                                                                       |              *-----------------------\
-                                                                      |              | Bonjour  Pseudonymee  |
+                                                                      |              | Hello    Pseudonymee  |
                                                                       |              |                       |
                                                                       |              | Score :       123456  |
                                                                       |              +-----------------------/
                                                                       |                      |         |
-                                                                      |                   *-----\ *---------\
-                                                                      |                   |{OK} | |{quitter}|
-                                                                      |                   +-----/ +---------/                     mwb
+                                                                      |                  *------\  *--------\
+                                                                      |                  | {OK} |  | {quit} |
+                                                                      |                  +------/  +--------/                     mwb
                                                                       |                      |         +-----------------------------
                                                                       |                      |                                  rulez
                                                   *-------------------|------------\         |
@@ -37,9 +37,9 @@
                                                   |                   |            !         ! !                                |
                                                   |                   |  *------------------------------------\                 |
                                                   |                   |  |                                    |                 |
-                                                  |                   |  |         boucle principale          |                 |
+                                                  |                   |  |             main loop              |                 |
                                                   |                   |  |                                    |                 |
-                                                  |                   |  |{retour}  {jouer} {editer} {credits}|                 |
+                                                  |                   |  | {back}   {play}  {editor} {credits}|                 |
                                                   |                   |  +------------------------------------/                 |
                                                   |                   |       |        |        |        |                      |
                                                   |                   +-------/        |        |        |                      |
@@ -48,7 +48,7 @@
                                                   |                       |                     !                          |    |
                                                   |                       |   *---------------------------------------\    |    |
                                                   |                       |   |                                       |    |    |
-                                                  |                       |   |  Nom                         |Eff|Fin |    |    |
+                                                  |                       |   |  Name                        |Del|End |    |    |
                                                   |                       |   |                              |   |    |    |    |
                                                   |                       |   | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{X}|{X} |    |    |
                                                   |                       |   | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{X}|{X} |    |    |
@@ -57,7 +57,7 @@
                                                   |                       |   | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{X}|{X} |    |    |
                                                   |                       |   | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{X}|{X} |    |    |
                                                   |                       |   |                                       |    |    |
-                                                  |                       |   | {retour}               {<}{>}         |    |    |
+                                                  |                       |   | {back}                 {<}{>}         |    |    |
                                                   |                       |   |                                       |    |    |
                                                   |                       |   +---------------------------------------/    |    |
                                                   |                       |                                                |    |
@@ -69,19 +69,19 @@
                                                   |                       |                |                      |             |
                                                   |                       |                | Music  : Willy       |             |
                                                   |                       |                |                      |             |
-                                                  |                  *---------\           | Design : aucun       |             |
+                                                  |                  *---------\           | Design : none        |             |
                                                   |                  |         |           |                      |             |
-                                                  |                  !         !           |             {retour} |             |
-                                                  |            *---------\*----------\     +----------------------/             |
-                                                  |            |{tournoi}|| {libre}  |                        |                 |
-                                                  |            +---------/+----------/                        +-----------------/
+                                                  |                  !         !           |               {back} |             |
+                                                  |            *----------\*--------\      +----------------------/             |
+                                                  |            |{campaing}|| {free} |                         |                 |
+                                                  |            +----------/+--------/                         +-----------------/
                                                   |                  |         |
                                                   |                  |         +--------------------------------\
                                                   |                  |                                          |
                                                   |                  !                                          !
                                                   |  *---------------------------------------\  *-------------------------------\
                                                   |  |                                       |  |                               |
-                                                  |  |  Nom                         | Score  |  |  Nom                          |
+                                                  |  |  Name                        | Score  |  |  Name                         |
                                                   |  |                              |        |  |                               |
                                                   |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
                                                   |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
@@ -94,7 +94,7 @@
                                                   |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
                                                   |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
                                                   |  |                                       |  |                               |
-                                                  |  | {retour}               {<}{>}         |  | {retour}               {<}{>} |
+                                                  |  | {back}                 {<}{>}         |  | {back}                 {<}{>} |
                                                   |  |                                       |  |                               |
                                                   |  +---------------------------------------/  +-------------------------------/
                                                   |        |                                          |
