@@ -197,7 +197,7 @@ int main(int nb_args, char **args) {
 		} else if (0==strncasecmp(args[a], "--no-net", 5)) {
 			with_net = 0;
 		} else if (0==strncasecmp(args[a], "--help", 6)) {
-			printf("\n%s [--silent] [--debug] [--ktx | --wgl] [--help]\n\n" \
+			printf("\n%s [--silent] [--debug] [--ktx | --wgl] [--no-net] [--help]\n\n" \
 					"  --silent : no sound\n" \
 					"  --debug : verbose\n" \
 					"  --ktx --wgl : use one of these extentions (do not)\n" \
@@ -205,7 +205,7 @@ int main(int nb_args, char **args) {
 					"  --help : this\n\n", args[0]);
 			exit(0);
 		} else {
-			puts("Unknown command line");
+			puts("Unknown command line (--help for help)");
 			exit(1);
 		}
 	}
