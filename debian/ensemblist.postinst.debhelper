@@ -1,5 +1,12 @@
 # Automatically added by dh_installdocs
-if [ "$1" = configure ] && which install-docs >/dev/null 2>&1; then
+if [ "$1" = "configure" ]; then
+	if [ -d /usr/doc -a ! -e /usr/doc/ensemblist -a -d /usr/share/doc/ensemblist ]; then
+		ln -sf ../share/doc/ensemblist /usr/doc/ensemblist
+	fi
+fi
+# End automatically added section
+# Automatically added by dh_installdocs
+if [ "$1" = configure ] && command -v install-docs >/dev/null 2>&1; then
 	install-docs -i /usr/share/doc-base/ensemblist
 fi
 # End automatically added section

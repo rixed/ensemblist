@@ -1,4 +1,4 @@
-ensemblist (0.0.20040227-1) unstable; urgency=low
+ensemblist () unstable; urgency=low
 
   * split datas from binary
 
