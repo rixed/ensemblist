@@ -25,13 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "opengl.h"
 #include "geom.h"
 
-/* DEBUG : affiche la CSG (1?re ?nigme) et modifie les objets */
+/* DEBUG MODE */
 
 static GLfloat camera[16] = {
 	1,0,0,0,
 	0,1,0,0,
 	0,0,1,0,
-	0,-2,-6,1	/* decaler en X sur la gauche, vent vers la droite */
+	0,-2,-6,1
 };
 static GLfloat projection[16];
 static double angle=0;

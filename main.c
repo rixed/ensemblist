@@ -54,13 +54,15 @@ static unsigned glut_fenMode = GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_STENC
 static const char *glut_fenName = "L'ensembleur";
 static int glut_top_window;
 
-static void glut_reshape(int w, int h) {
+static void glut_reshape(int w, int h)
+{
 	glut_fenLong=w;
 	glut_fenHaut=h;
 	glViewport(0,0,w,h);
 }
 
-static void glut_display(void) {
+static void glut_display(void)
+{
 	if (NULL!=mode_display[mode]) {
 		mode_display[mode]();
 		glutSwapBuffers();
