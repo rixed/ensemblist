@@ -101,10 +101,32 @@ struct {
 	const char *file;
 	mesh *m;
 } mesh_to_load[] = {
-	{ "arrow.mesh", NULL }, { "instance0_arrow.mesh", NULL }, { "instance1_arrow.mesh", NULL }, { "instance2_arrow.mesh", NULL }, { "instance3_arrow.mesh", NULL }, { "instance4_arrow.mesh", NULL },
-	{ "curved_arrow.mesh", NULL }, { "instance6_curved_arrow.mesh", NULL }, { "instance7_curved_arrow.mesh", NULL }, { "instance8_curved_arrow.mesh", NULL }, { "instance9_curved_arrow.mesh", NULL }, { "instance10_curved_arrow.mesh", NULL },
-	{ "smaller_arrow.mesh", NULL }, { "instance11_smaller_arrow.mesh", NULL }, { "instance12_smaller_arrow.mesh", NULL }, { "taller_arrow.mesh", NULL }, { "instance13_taller_arrow.mesh", NULL }, { "instance14_taller_arrow.mesh", NULL },
-	{ "cube_rond.mesh", NULL }, { "validate.mesh", NULL }, { "parenth.mesh", NULL }, { "back.mesh", NULL }, { "solution.mesh", NULL }, { "sphere.mesh", NULL }, { "zap.mesh", NULL }, { "play.mesh", NULL }
+	{ "arrow.mesh", NULL },
+	{ "instance0_arrow.mesh", NULL },
+	{ "instance1_arrow.mesh", NULL },
+	{ "instance2_arrow.mesh", NULL },
+	{ "instance3_arrow.mesh", NULL },
+	{ "instance4_arrow.mesh", NULL },
+	{ "curved_arrow.mesh", NULL },
+	{ "instance6_curved_arrow.mesh", NULL },
+	{ "instance7_curved_arrow.mesh", NULL },
+	{ "instance8_curved_arrow.mesh", NULL },
+	{ "instance9_curved_arrow.mesh", NULL },	// 10
+	{ "instance10_curved_arrow.mesh", NULL },
+	{ "smaller_arrow.mesh", NULL },
+	{ "instance11_smaller_arrow.mesh", NULL },
+	{ "instance12_smaller_arrow.mesh", NULL },
+	{ "taller_arrow.mesh", NULL },
+	{ "instance13_taller_arrow.mesh", NULL },
+	{ "instance14_taller_arrow.mesh", NULL },
+	{ "cube_rond.mesh", NULL },
+	{ "validate.mesh", NULL },
+	{ "parenth.mesh", NULL },	// 20
+	{ "back.mesh", NULL },
+	{ "solution.mesh", NULL },
+	{ "sphere.mesh", NULL },
+	{ "zap.mesh", NULL },
+	{ "play.mesh", NULL }
 };
 static struct {
 	char aff;
@@ -779,11 +801,11 @@ void play_display() {
 			memcpy(pos->c, e->bricks[selected_prim]->pos->c, sizeof(pos->c));
 			glEnable(GL_LIGHTING);
 			glEnable(GL_BLEND);
-			glColor4f(1.,.1,.3,.7);
+			glColor3f(1.,.1,.3);//,.7);
 			draw_position(pos);
 			prim_alpha = .6*sin(prim_pulse);
 			if (prim_alpha>0) {
-				glColor4f(.1,.2,.9,prim_alpha);
+				glColor3f(.1,.2,.9);//,prim_alpha);
 				draw_position(e->bricks[selected_prim]->pos);
 			}
 			prim_pulse += .5;
@@ -932,6 +954,7 @@ void play_display() {
 		}
 	}
 	{	/* draw menu */
+		
 		GLfloat primpos[16];
 		unsigned p;
 		int paste_token;
@@ -950,7 +973,7 @@ void play_display() {
 		glLoadIdentity();
 		glEnable(GL_BLEND);
 		glBegin(GL_QUADS);	// background
-		glColor4f(.1,.2,.5,.3);
+		glColor3f(.1,.2,.5);//,.3);
 		glVertex3f(-1,-1,-1.);
 		glVertex3f(1,-1,-1.);
 		glVertex3f(1,1,-1.);
@@ -1045,7 +1068,7 @@ void play_display() {
 			glViewport(0,0,glut_fenLong,h_pixel);
 			glDisable(GL_LIGHTING);
 			glEnable(GL_BLEND);
-			glBlendFunc (GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+			glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 			primpos[0] = 1; primpos[1] = 0; primpos[2] = 0;
 			primpos[4] = 0; primpos[5] = 1; primpos[6] = 0;
 			primpos[8] = 0; primpos[9] = 0; primpos[10] = 1;

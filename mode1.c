@@ -36,8 +36,6 @@ static GLfloat camera[16] = {
 static GLfloat projection[16];
 static double angle=0;
 
-static mesh *test_mesh;
-
 void m1_display(void) {
 	static csg_union_of_partial_products *uopp = NULL;
 	double ca, sa;
@@ -60,8 +58,6 @@ void m1_display(void) {
 		glMatrixMode(GL_MODELVIEW);
 		glGetFloatv(GL_PROJECTION_MATRIX, projection);
 		geom_set_current_projection(projection);
-		test_mesh = data_load_mesh("num_cylinder.mesh", 0);
-		if (NULL==test_mesh) gltv_log_fatal("mode1: Cannot load mesh");
 		glColor3f(.2,.5,.5);
 	}
 	ca = cos(angle);
@@ -78,6 +74,4 @@ void m1_display(void) {
 	glLoadMatrixf(camera);
 	geom_set_current_modelview(camera);
 	draw_union_of_partial_products(uopp);
-	// and a test_mesh
-//	draw_mesh(test_mesh);
 }

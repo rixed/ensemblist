@@ -84,12 +84,12 @@ void user_read()
 	if (!user_rc_dir || !user_score_file) gltv_log_fatal("user_read: Cannot get memory\n");
 	memcpy(user_rc_dir, user_dir, u);
 	memcpy(user_rc_dir+u, config_dir, v+1);
+	atexit(user_save);
 	if (!sys_make_dir(user_rc_dir)) {
 		gltv_log_warning(GLTV_LOG_MUSTSEE, "user_read: Cannot get user's config directory");
 		init_void_user();
 		return;
 	}
-	atexit(user_save);
 	memcpy(user_score_file, user_rc_dir, u+v);
 	memcpy(user_score_file+u+v, score_file, w+1);
 	file = fopen(user_score_file, "r");
