@@ -1,4 +1,4 @@
-ensemblist () unstable; urgency=low
+ensemblist (0.0.20040512) unstable; urgency=low
 
   * english fix in control file
   * user directory creation bugfix
