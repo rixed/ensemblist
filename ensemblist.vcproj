@@ -21,7 +21,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="&quot;E:\CODE\LIB\curl-7.10.3\include&quot;;E:\CODE\lensembleur;E:\CODE\lensembleur\GLUT"
+				AdditionalIncludeDirectories="E:\CODE\LIB\zlib114;&quot;E:\CODE\LIB\curl-7.10.3\include&quot;;E:\CODE\lib\GLUT"
 				PreprocessorDefinitions="WIN32,NDEBUG,_WINDOWS"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
@@ -43,6 +43,7 @@
 				Version="1.0"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="FALSE"
 				ProgramDatabaseFile=".\Release/lensembleur.pdb"
 				SubSystem="2"/>
@@ -174,6 +175,9 @@
 				RelativePath="modes.c">
 			</File>
 			<File
+				RelativePath="png2gl.c">
+			</File>
+			<File
 				RelativePath="share.c">
 			</File>
 			<File
@@ -258,22 +262,22 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 		</Filter>
 		<File
-			RelativePath="il\DevIL.lib">
+			RelativePath="..\..\LIB\IL\DevIL.lib">
 		</File>
 		<File
-			RelativePath="il\ILU.lib">
+			RelativePath="..\..\LIB\GLUT\GLUT32.LIB">
 		</File>
 		<File
-			RelativePath="il\ILUT.lib">
+			RelativePath="..\..\LIB\IL\ILU.lib">
 		</File>
 		<File
-			RelativePath=".\glut\glut32.lib">
+			RelativePath="..\..\LIB\IL\ILUT.lib">
 		</File>
 		<File
-			RelativePath="il\il_wrap.lib">
+			RelativePath="..\..\LIB\curl-7.10.3\lib\Release\libcurl.lib">
 		</File>
 		<File
-			RelativePath="..\LIB\curl-7.10.3\lib\Release\libcurl.lib">
+			RelativePath="..\..\LIB\libpng-1.2.4-1-lib\lib\libpng.lib">
 		</File>
 		<File
 			RelativePath="mikmod.lib">
