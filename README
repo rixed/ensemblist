@@ -1,0 +1,45 @@
+license
+
+everything is released under the GPL.
+the whole license is reproduced in the file named LICENSE.
+we consider adding a more permissive license later.
+
+
+authors
+
+send patches or ideas to rixed@free.fr or dom@tatm.com
+
+
+storyboard
+
+an evil drug have split your brain into pieces.
+only your logical capacities remain functionnal.
+use them to reassemble the pieces and retrieve others.
+
+
+requirements
+
+opengl, glu, glut, openil (aka devil), mikmod, libcurl, a mouse with two buttons
+and two fingers.
+8 bits of stencil buffer will help, as will the GL_KTX_buffer_region openGl
+extention when this hack will be debugged.
+
+
+installation
+
+on unix, make && su -c 'make install'.
+on windows, clic clic, then clic clic clic.
+on mac-os, any of the above.
+
+
+musics
+
+are some old s3m made by a friend. s3m, like mod, come from a world with
+no license, in a time when everyone was used to happylly rip things from others.
+you are alowed to play those tunes, to share them with your friends, and to
+listen to them, but you are NOT allowed to pretend to like las ketchup better.
+
+
+
+live well
+

@@ -1,0 +1,121 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                      *---------------------------\
+                                                                      |                           !
+                                                                      |              *-----------------------\
+                                                                      |              | Bonjour  Pseudonymee  |
+                                                                      |              |                       |
+                                                                      |              | Score :       123456  |
+                                                                      |              +-----------------------/
+                                                                      |                      |         |
+                                                                      |                   *-----\ *---------\
+                                                                      |                   |{OK} | |{quitter}|
+                                                                      |                   +-----/ +---------/                     mwb
+                                                                      |                      |         +-----------------------------
+                                                                      |                      |                                  rulez
+                                                  *-------------------|------------\         |
+                                                  |                   |            |         | *--------------------------------\
+                                                  |                   |            !         ! !                                |
+                                                  |                   |  *------------------------------------\                 |
+                                                  |                   |  |                                    |                 |
+                                                  |                   |  |         boucle principale          |                 |
+                                                  |                   |  |                                    |                 |
+                                                  |                   |  |{retour}  {jouer} {editer} {credits}|                 |
+                                                  |                   |  +------------------------------------/                 |
+                                                  |                   |       |        |        |        |                      |
+                                                  |                   +-------/        |        |        |                      |
+                                                  |                                    |        |        +-----------------\    |
+                                                  |                       *------------/        |                          |    |
+                                                  |                       |                     !                          |    |
+                                                  |                       |   *---------------------------------------\    |    |
+                                                  |                       |   |                                       |    |    |
+                                                  |                       |   |  Nom                         |Eff|Fin |    |    |
+                                                  |                       |   |                              |   |    |    |    |
+                                                  |                       |   | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{X}|{X} |    |    |
+                                                  |                       |   | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{X}|{X} |    |    |
+                                                  |                       |   | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{X}|{X} |    |    |
+                                                  |                       |   | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{X}|{X} |    |    |
+                                                  |                       |   | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{X}|{X} |    |    |
+                                                  |                       |   | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{X}|{X} |    |    |
+                                                  |                       |   |                                       |    |    |
+                                                  |                       |   | {retour}               {<}{>}         |    |    |
+                                                  |                       |   |                                       |    |    |
+                                                  |                       |   +---------------------------------------/    |    |
+                                                  |                       |                                                |    |
+                                                  |                       |                         *----------------------/    |
+                                                  |                       |                         |                           |
+                                                  |                       |                *----------------------\             |
+                                                  |                       |                |                      |             |
+                                                  |                       |                | Code   : Rixed - Dom |             |
+                                                  |                       |                |                      |             |
+                                                  |                       |                | Music  : Willy       |             |
+                                                  |                       |                |                      |             |
+                                                  |                  *---------\           | Design : aucun       |             |
+                                                  |                  |         |           |                      |             |
+                                                  |                  !         !           |             {retour} |             |
+                                                  |            *---------\*----------\     +----------------------/             |
+                                                  |            |{tournoi}|| {libre}  |                        |                 |
+                                                  |            +---------/+----------/                        +-----------------/
+                                                  |                  |         |
+                                                  |                  |         +--------------------------------\
+                                                  |                  |                                          |
+                                                  |                  !                                          !
+                                                  |  *---------------------------------------\  *-------------------------------\
+                                                  |  |                                       |  |                               |
+                                                  |  |  Nom                         | Score  |  |  Nom                          |
+                                                  |  |                              |        |  |                               |
+                                                  |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
+                                                  |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
+                                                  |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
+                                                  |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
+                                                  |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
+                                                  |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
+                                                  |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
+                                                  |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
+                                                  |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
+                                                  |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa}|{00000} |  | {aaaaaaaaaaaaaaaaaaaaaaaaaaa} |
+                                                  |  |                                       |  |                               |
+                                                  |  | {retour}               {<}{>}         |  | {retour}               {<}{>} |
+                                                  |  |                                       |  |                               |
+                                                  |  +---------------------------------------/  +-------------------------------/
+                                                  |        |                                          |
+                                                  +--------/                                          |
+                                                  +---------------------------------------------------/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                             fin
+
