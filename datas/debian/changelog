@@ -1,9 +1,5 @@
 ensemblist () unstable; urgency=low
 
-  * split datas from binary
-
- -- Cedric Cellier (rixed) <rixed@free.fr>  Fri, 27 Feb 2004 22:15:00 +0100
-
   * added explicit link against libz
 
  -- Cedric Cellier (rixed) <rixed@free.fr>  Tue, 17 Feb 2004 23:56:54 +0100

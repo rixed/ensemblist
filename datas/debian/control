@@ -7,7 +7,7 @@ Standards-Version: 3.6.0
 
 Package: ensemblist
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ensemblist-data
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: A puzzle game where you build 3d shapes using CSG
  Ensemblist is a 3d puzzle game where you have to build 3d shapes
  by combining simplier shapes using Constructive Solid Geometry
