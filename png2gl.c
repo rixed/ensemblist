@@ -48,7 +48,7 @@ GLuint png2gl_load_image(char *file_name)
 	}
 	fread(header, 1, sizeof(header), fp);
 	if (png_sig_cmp(header, 0, sizeof(header))) {
-		gltv_log_fatal("png2gl_load_image '%s' : Not a png file");
+		gltv_log_fatal("png2gl_load_image '%s' : Not a png file", file_name);
 	}
 	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr) {
