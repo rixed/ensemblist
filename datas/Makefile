@@ -10,4 +10,3 @@ install: $(NAME)
 deb:
 	dpkg-buildpackage -rfakeroot
 
-include depends
