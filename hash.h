@@ -33,7 +33,7 @@ typedef struct s_gltv_hash* GLTV_HASH;
 
 /* to get a new empty hash.
  * nbr_of_total_elements is the expected total numbers of elements
- * nbr_of_elements_per_line is an accepted hash collision per key (better case)
+ * nbr_of_elements_per_line is an accepted hash collision per key (best case)
  * if GLTV_HASH_OPT_SIZE the stack of remove entries is smaller
  * if GLTV_HASH_OPT_SPEED the stack will expand as necessary
  * if GLTV_HASH_STRKEYS the passed keys are, in fact, char* of strings...
