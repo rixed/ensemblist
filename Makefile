@@ -32,9 +32,7 @@ depends: $(wildcard *.c) $(wildcard *.h) menu_digits.h
 install: $(NAME)
 	@echo '$(COL)$@$(NORM)'
 	@install -d $(DESTDIR)/usr/games
-	#@install -d $(DATADIR)
 	@install -m755 $(NAME) $(DESTDIR)/usr/games
-	#@find datas/ -\( -name CVS -prune -\) -o -type f -exec install -m644 \{\} $(DATADIR) \;
 
 deb:
 	dpkg-buildpackage -rfakeroot
