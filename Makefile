@@ -35,6 +35,7 @@ install: $(NAME)
 	@install -m755 $(NAME) $(DESTDIR)/usr/games
 
 deb:
-	dpkg-buildpackage -rfakeroot
+	@# -i to filter out CVS and such from source
+	dpkg-buildpackage -rfakeroot -i
 
 include depends
