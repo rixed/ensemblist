@@ -31,9 +31,9 @@ depends: $(wildcard *.c) $(wildcard *.h) menu_digits.h
 
 install: $(NAME)
 	@echo '$(COL)$@$(NORM)'
-	@install -d $(DESTDIR)/usr/games
+	@install -d $(DESTDIR)/usr/games $(DESTDIR)/usr/share/pixmaps
 	@install -m755 $(NAME) $(DESTDIR)/usr/games
-	@install -m644 $(NAME)_32x32.xpm $(DESTDIR)/usr/share/pixmap
+	@install -m644 $(NAME)_32x32.xpm $(DESTDIR)/usr/share/pixmaps
 
 deb:
 	@# -i to filter out CVS and such from source

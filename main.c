@@ -180,7 +180,7 @@ int main(int nb_args, char **args) {
 "Copyright (C) 2003 Cedric Cellier, Dominique Lavault\n" \
 "Ensemblist comes with ABSOLUTELY NO WARRANTY;\n" \
 "This is free software, and you are welcome to redistribute it under certain conditions;\n" \
-"show COPYING for details.\n");
+"See http://www.gnu.org/licenses/gpl.txt for details.\n");
 	/* command line */
 	for (a=1; a<nb_args; a++) {
 		if (0==strncasecmp(args[a], "--silent", 8)) {
