@@ -81,7 +81,7 @@ texture *data_load_texture(const char *file_name)
 			gltv_log_warning(GLTV_LOG_MUSTSEE, "ilutGLLoadImages error %d", err);
 			err = ilGetError();
 		} while (err!=IL_NO_ERROR);
-		gltv_log_fatal("Error loading texture.");
+		gltv_log_fatal("Error loading texture '%s'.", file_name);
 	}
 	glBindTexture(GL_TEXTURE_2D, tex->binding);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	/* basic config */
