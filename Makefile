@@ -41,7 +41,7 @@ clean:
 
 menu_digits.h: txt2digit.pl menu.txt
 	@echo '$(COL)$@$(NORM)'
-	@txt2digit.pl < menu.txt > menu_digits.h
+	@./txt2digit.pl < menu.txt > menu_digits.h
 
 depends: $(wildcard *.c) $(wildcard *.h) menu_digits.h
 	@echo '$(COL)$@$(NORM)'
