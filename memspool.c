@@ -96,6 +96,7 @@ void *gltv_memspool_alloc_d(unsigned requested_size, char const *file, size_t li
 		((struct head*)mem)->size = requested_size;
 		((struct head*)mem)->ref_count = 1;
 		((struct head*)mem)->prec = last;
+		((struct head*)mem)->next = 0;
 		((struct head*)mem)->caller_file = file;
 		((struct head*)mem)->caller_line = line;
 		last = (struct head*)mem;
