@@ -1,5 +1,9 @@
 ensemblist () unstable; urgency=low
 
+  * transparency "bugfix"
+
+ -- Cedric Cellier (rixed) <rixed@free.fr>  Wed,  9 Feb 2005 17:30:00 +0100
+
 ensemblist (0.0.20040512) unstable; urgency=low
 
   * english fix in control file

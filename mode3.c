@@ -37,8 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define M_PI       3.14159265358979323846
 #endif
 
-/* lets R0ck n r0ll !! */
-
 int edit_session;
 char *edit_session_name;
 
@@ -954,7 +952,6 @@ void play_display() {
 		}
 	}
 	{	/* draw menu */
-		
 		GLfloat primpos[16];
 		unsigned p;
 		int paste_token;
@@ -965,15 +962,15 @@ void play_display() {
 		glLoadIdentity();
 		glFrustum(-1,1, -h_pixel_f,h_pixel_f, 1,100);
 		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 		primpos[3] = primpos[7] = primpos[11] = 0;
 		primpos[13] = PRIM_HEIGHT;
 		primpos[14] = PRIM_DEPTH;
 		primpos[15] = 1;
 		glDisable(GL_LIGHTING);
-		glLoadIdentity();
 		glEnable(GL_BLEND);
 		glBegin(GL_QUADS);	// background
-		glColor3f(.1,.2,.5);//,.3);
+		glColor4f(.1,.2,.5,.3);
 		glVertex3f(-1,-1,-1.);
 		glVertex3f(1,-1,-1.);
 		glVertex3f(1,1,-1.);
