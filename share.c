@@ -109,15 +109,24 @@ static void processEnigmList(struct MemoryStruct * pChunk)
 	char fileName[MAX_PATH], pathName[MAX_PATH];
 	struct MemoryStruct enigmChunk;
 	char * ptr = pChunk->memory,*  tmpPtr,* tmpFinPtr;
-	enigmChunk.size=enigmChunk.memory=0;
 
+	if (!ptr) {	/* pChunk->memory is NULL if curl didn't download anything */
+		gltv_log_warning(GLTV_LOG_MUSTSEE, "processEnigmList: Cannot get URL");
+		return;
+	}
+	
+	enigmChunk.size = 0;
+	enigmChunk.memory = NULL;
+	
 	// 1.0 lister les fichiers présents online et qu'on a pas --------------------------
 	// 1.0.1 rechercher le signet de début de fichier
 	tmpPtr = strstr(ptr,TAG_ENIGM_START);
-	if( tmpPtr == NULL)
+	if( tmpPtr == NULL) {
+		gltv_log_warning(GLTV_LOG_MUSTSEE, "processEnigmList: bad format");		
 		return;
-	else
+	} else {
 		tmpPtr+=strlen(TAG_ENIGM_START);
+	}
 
 	// 1.0.2 rechercher le signet de fin de fichier
 	tmpFinPtr= strstr(tmpPtr,TAG_ENIGM_CLOSE);
@@ -131,10 +140,10 @@ static void processEnigmList(struct MemoryStruct * pChunk)
 	fileName[tmpFinPtr-tmpPtr]=0;	
 
 	// 1.0.4 on l'a déjà?
-	if ((fpEnignList=fopen(fileName,"r"))!=NULL)
+	if ((fpEnignList=fopen(fileName,"r"))!=NULL) {
+		gltv_log_warning(GLTV_LOG_MUSTSEE, "processEnigmList: enigm '%s' already there", fileName);
 		fclose(fpEnignList);	// on l'a
-	else
-	{
+	} else {
 		// 1.1 downloader le fichier--------------------------
 		// 1.1.2 get url
 		strcpy(pathName,REMOTE_ENIGM_PATH_URL);

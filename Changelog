@@ -1,6 +1,7 @@
 2003-04-17  Cedric Cellier  <rixed@free.fr>
 
 	* Menu: translated to english.
+	* libCurl: more error checking.
 
 
 2003-04-16  Cedric Cellier  <rixed@free.fr>
