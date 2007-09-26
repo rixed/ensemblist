@@ -54,16 +54,9 @@ void sound_init(int active) {
 	unsigned i;
 	sound_on = active;
 	if (!sound_on) return;
-#ifdef _WINDOWS
-	MikMod_RegisterDriver(&drv_win);
-#elif __APPLE__ 
 	MikMod_RegisterAllDrivers();
-#else
-	MikMod_RegisterDriver(&drv_oss);
-#endif
 	MikMod_RegisterAllLoaders();
-	md_device = 1;
-	if (MikMod_Init("buffer=10")) {
+	if (MikMod_Init("")) {
 		gltv_log_fatal("MikMod : Cannot initialize sound: %s", MikMod_strerror(MikMod_errno));
 	}
 	for (i=0; i<nb_musics; i++) {
