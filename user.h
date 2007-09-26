@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define USER_H
 
 extern char *user_rc_dir;
-extern char *user_name;
+extern char const *user_name;
 extern unsigned user_score;
 
 extern void user_read();

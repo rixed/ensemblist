@@ -496,6 +496,7 @@ static int geom_pos_are_equivalent(GLfloat *m1, GLfloat *m2, unsigned sym2)
 	} else {
 		gltv_log_fatal("symmetry not handled for now : %u", sym2);
 	}
+	return 0;	// clears a warning. gltv_log_fatal does not return.
 }
 
 int geom_pos_is_equivalent(mesh **m, GLfloat (*pos)[16], unsigned nb_pos)

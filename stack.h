@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _GLTV_STACK_
 #define _GLTV_STACK_
 
+#include <stdint.h>
+
 struct s_gltv_stack;
 typedef struct s_gltv_stack gltv_stack;
 
@@ -32,9 +34,9 @@ extern gltv_stack *gltv_stack_new(unsigned, char);
 /* to delete a stack */
 extern void gltv_stack_del(gltv_stack *);
 /* to push a value */
-extern int gltv_stack_push(gltv_stack *, void *);
+extern int gltv_stack_push(gltv_stack *, intptr_t);
 /* to pop a value */
-extern void *gltv_stack_pop(gltv_stack *);
+extern intptr_t gltv_stack_pop(gltv_stack *);
 /* to empty the stack (the stack keeps its current size, even if resized) */
 extern void gltv_stack_clear(gltv_stack *);
 /* tells the stack size */

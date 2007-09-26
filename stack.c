@@ -26,7 +26,7 @@ struct s_gltv_stack {
 	unsigned next;
 	unsigned max_size;
 	char resizeable;
-	void **entries;
+	intptr_t *entries;
 };
 
 /* TODO add stack_compact and use it if resizeable in pop and clear to match initial size */
@@ -51,7 +51,7 @@ void gltv_stack_del(gltv_stack *s) {
 	gltv_memspool_unregister(s);
 }
 
-int gltv_stack_push(gltv_stack *s, void *value) {
+int gltv_stack_push(gltv_stack *s, intptr_t value) {
 	assert(s->next<=s->max_size);
 	if (s->next == s->max_size) {
 		if (s->resizeable) {
@@ -66,7 +66,7 @@ int gltv_stack_push(gltv_stack *s, void *value) {
 	return 1;
 }
 
-void *gltv_stack_pop(gltv_stack *s) {
+intptr_t gltv_stack_pop(gltv_stack *s) {
 	assert(s->next>0);
 	return s->entries[--s->next];
 }

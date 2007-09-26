@@ -19,12 +19,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "stack.h"
 #include "memspool.h"
 #include "log.h"
+#include <stdint.h>
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
 
 typedef struct {
-	unsigned key;
+	intptr_t key;
 	void* value;
 	unsigned next;	/* 0 if last, 1 if vaccant */
 } entry;
@@ -87,7 +88,7 @@ void gltv_hash_del(GLTV_HASH h) {
 	gltv_memspool_unregister(h);
 }
 
-static unsigned hash_func(GLTV_HASH hash, unsigned key) {
+static unsigned hash_func(GLTV_HASH hash, intptr_t key) {
 	unsigned index = 0;
 	unsigned c;
 	if (hash->flag & GLTV_HASH_STRKEYS) {
@@ -107,7 +108,7 @@ static unsigned hash_func(GLTV_HASH hash, unsigned key) {
 	return index;
 }
 
-int keysMatch(GLTV_HASH hash, unsigned k1, unsigned k2) {
+int keysMatch(GLTV_HASH hash, intptr_t k1, intptr_t k2) {
 	if (hash->flag & GLTV_HASH_STRKEYS)
 		return 0==strcmp((char*)k1, (char*)k2);
 	else
@@ -124,7 +125,7 @@ static void resize(hash *h, unsigned nb_entries) {
 	h->nb_usable_entries = nb_entries;
 }
 
-void gltv_hash_put(GLTV_HASH h, unsigned key, void *value) {
+void gltv_hash_put(GLTV_HASH h, intptr_t key, void *value) {
 	unsigned line = hash_func(h, key);
 	unsigned *eptr_location, eptr, old_next;
 start:
@@ -148,7 +149,7 @@ start:
 		/* no easy space */
 		/* try to use the stack of removed entries to store vacant locations. */
 		if (gltv_stack_size(h->removed)) {
-			eptr = (unsigned) gltv_stack_pop(h->removed);
+			eptr = (intptr_t)gltv_stack_pop(h->removed);
 			assert(h->entries[eptr].next==1);
 		} else {
 			/* otherwise parse everything to find vacant entries
@@ -181,7 +182,7 @@ start:
 	h->nb_used_entries++;
 }
 
-char gltv_hash_get(GLTV_HASH h, unsigned key, void **value) {
+char gltv_hash_get(GLTV_HASH h, intptr_t key, void **value) {
 	unsigned line = hash_func(h, key);
 	unsigned eptr = h->lines[line].first;
 	while ( eptr != 0) {
@@ -195,13 +196,13 @@ char gltv_hash_get(GLTV_HASH h, unsigned key, void **value) {
 	return 0;
 }
 
-char gltv_hash_remove(GLTV_HASH h, unsigned key) {
+char gltv_hash_remove(GLTV_HASH h, intptr_t key) {
 	unsigned line = hash_func(h, key);
 	unsigned eptr = h->lines[line].first;
 	unsigned old_eptr = 0;
 	while ( eptr != 0) {
 		if (keysMatch(h, h->entries[eptr].key, key)) {
-			gltv_stack_push(h->removed, (void*)eptr);
+			gltv_stack_push(h->removed, (intptr_t)eptr);
 			if (0 != old_eptr)
 				h->entries[old_eptr].next = h->entries[eptr].next;
 			else
@@ -226,7 +227,7 @@ void gltv_hash_reset(GLTV_HASH h) {
 	h->read_next = 2;
 }
 
-char gltv_hash_each(GLTV_HASH h, unsigned *key, void **value) {
+char gltv_hash_each(GLTV_HASH h, intptr_t *key, void **value) {
 	unsigned i;
 	for (i=h->read_next; i<h->next_free_entry; i++) {
 		if (1 != h->entries[i].next) {

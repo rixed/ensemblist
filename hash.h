@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GLTV_HASH_OPT_SPEED 0x1
 #define GLTV_HASH_STRKEYS 0x2
 
+#include <stdint.h>
+
 struct s_gltv_hash;
 typedef struct s_gltv_hash* GLTV_HASH;
 
@@ -47,19 +49,19 @@ extern GLTV_HASH gltv_hash_new(unsigned, unsigned, int);
 extern void gltv_hash_del(GLTV_HASH);
 /* to put a new pair of key/value or update the value associated with the key */
 /* Its not guaranted weither a given implementation would permit to convert a pointer to an int and back again to the same pointer. It MUST works, otherwise take long or whatever for holding keys */
-extern void gltv_hash_put(GLTV_HASH, unsigned, void *);
+extern void gltv_hash_put(GLTV_HASH, intptr_t, void *);
 /* to get the value associated with a key (in value). return 0 if key does not exists */
-extern char gltv_hash_get(GLTV_HASH, unsigned, void **);
+extern char gltv_hash_get(GLTV_HASH, intptr_t, void **);
 /* tells wether a key is defined in the hash */
-extern char gltv_hash_defined(GLTV_HASH, unsigned);
+extern char gltv_hash_defined(GLTV_HASH, intptr_t);
 /* remove the value associated to the key */
-extern char gltv_hash_remove(GLTV_HASH, unsigned);
+extern char gltv_hash_remove(GLTV_HASH, intptr_t);
 /* tells how many keys are defined */
 extern unsigned gltv_hash_size(GLTV_HASH);
 /* reset the read pointer */
 extern void gltv_hash_reset(GLTV_HASH);
 /* read next pair (key,value). return 0 if there are no more values */
-extern char gltv_hash_each(GLTV_HASH, unsigned *, void **);
+extern char gltv_hash_each(GLTV_HASH, intptr_t *, void **);
 /* once you are done inserting new key in the hash, you can compact it with
  * the hash still works as a hash, anyway */
 extern void gltv_hash_compact(GLTV_HASH);

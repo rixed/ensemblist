@@ -21,6 +21,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "opengl.h"
 
 void png2gl_init();
-GLuint png2gl_load_image(char*);
+GLuint png2gl_load_image(char const *);
 
 #endif

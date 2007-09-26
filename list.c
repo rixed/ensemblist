@@ -124,7 +124,7 @@ static void desalloc_index(GLTV_LIST l, unsigned index) {
 	} else {
 		if (index < l->full_until)
 			l->full_until = index;
-		gltv_stack_push(l->removed, (void*)index);
+		gltv_stack_push(l->removed, index);
 		l->entries[index].next=1;	/* tag as vaccant */
 	}
 	l->nb_used_entries--;

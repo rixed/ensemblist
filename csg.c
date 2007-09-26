@@ -171,6 +171,7 @@ static int csg_parse(csg_node *node, unsigned nb_prims, mesh **meshes)
 			return 1;
 		}
 	}
+	return 0;	// clean a warning. gltv_log_fatal does not return.
 }
 
 static int csg_normalize_node(csg_node *node)

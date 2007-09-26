@@ -29,7 +29,7 @@ void png2gl_init()
 {
 }
 
-GLuint png2gl_load_image(char *file_name)
+GLuint png2gl_load_image(char const *file_name)
 {
 	FILE *fp = fopen(file_name, "rb");
 	unsigned char header[8];

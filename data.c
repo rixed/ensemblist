@@ -41,7 +41,7 @@ static GLTV_HASH textures = NULL;
 
 static void data_free_textures()
 {
-	unsigned dummy_key;
+	intptr_t dummy_key;
 	texture *tex;
 	gltv_hash_reset(textures);
 	while (gltv_hash_each(textures, &dummy_key, (void**)&tex)) {
@@ -67,7 +67,7 @@ texture *data_load_texture(const char *file_name)
 		png2gl_init();
 		png2gl_needs_init = 0;
 	}
-	if (gltv_hash_get(textures, (unsigned)file_name, (void**)&tex)) {
+	if (gltv_hash_get(textures, (intptr_t)file_name, (void**)&tex)) {
 		return tex;
 	}
 	tex = gltv_memspool_alloc(sizeof(*tex));
@@ -88,7 +88,7 @@ texture *data_load_texture(const char *file_name)
 		return NULL;
 	}
 	memcpy(tex->name, file_name, len);
-	gltv_hash_put(textures, (unsigned)(tex->name), tex);
+	gltv_hash_put(textures, (intptr_t)tex->name, tex);
 	return tex;
 }
 
@@ -138,7 +138,7 @@ static GLTV_HASH primitives = NULL;
 
 static void data_free_primitives()
 {
-	unsigned dummy_key;
+	intptr_t dummy_key;
 	primitive *prim;
 	gltv_hash_reset(primitives);
 	while (gltv_hash_each(primitives, &dummy_key, (void**)&prim)) {
@@ -177,7 +177,7 @@ primitive *data_load_primitive(const char *file_name, int recentre)
 		}
 		atexit(data_free_primitives);
 	}
-	if (gltv_hash_get(primitives, (unsigned)file_name, (void**)&prim)) {
+	if (gltv_hash_get(primitives, (intptr_t)file_name, (void**)&prim)) {
 		return prim;
 	}
 	gltv_log_warning(GLTV_LOG_DEBUG, "Reading primitive from file '%s'\n", file_name);
@@ -315,7 +315,7 @@ format_error:
 	}
 	bound_primitive(prim, recentre);
 	fclose(file);
-	gltv_hash_put(primitives, (unsigned)(prim->name), prim);
+	gltv_hash_put(primitives, (intptr_t)prim->name, prim);
 	return prim;
 }
 
@@ -324,7 +324,7 @@ position *data_get_named_position(const char *name)
 {
 	position *pos;
 	assert(NULL!=positions);
-	if (gltv_hash_get(positions, (unsigned)name, (void**)&pos)) {
+	if (gltv_hash_get(positions, (intptr_t)name, (void**)&pos)) {
 		return pos;
 	} else {
 		return NULL;
@@ -333,7 +333,7 @@ position *data_get_named_position(const char *name)
 
 static void data_free_positions()
 {
-	unsigned dummy_key;
+	intptr_t dummy_key;
 	position *pos;
 	gltv_hash_reset(positions);
 	while (gltv_hash_each(positions, &dummy_key, (void**)&pos)) {
@@ -358,7 +358,7 @@ position *data_load_position(const char *file_name)
 		}
 		atexit(data_free_positions);
 	}
-	if (gltv_hash_get(positions, (unsigned)file_name, (void**)&pos)) {
+	if (gltv_hash_get(positions, (intptr_t)file_name, (void**)&pos)) {
 		return pos;
 	}
 	pos = gltv_memspool_alloc(sizeof(*pos));
@@ -416,7 +416,7 @@ bad_pos:
 		gltv_log_fatal("load_position: Cannot get memory for name");
 	}
 	memcpy(pos->name, file_name, len);
-	gltv_hash_put(positions, (unsigned)(pos->name), pos);
+	gltv_hash_put(positions, (intptr_t)pos->name, pos);
 	return pos;
 }
 
@@ -447,7 +447,7 @@ static GLTV_HASH coords = NULL;
 
 static void data_free_coords()
 {
-	unsigned dummy_key;
+	intptr_t dummy_key;
 	uv_coords *uv;
 	gltv_hash_reset(coords);
 	while (gltv_hash_each(coords, &dummy_key, (void**)&uv)) {
@@ -471,7 +471,7 @@ uv_coords *data_load_uv_coords(const char *file_name, unsigned nb_pts)
 		}
 		atexit(data_free_coords);
 	}
-	if (gltv_hash_get(coords, (unsigned)file_name, (void**)&uv)) {
+	if (gltv_hash_get(coords, (intptr_t)file_name, (void**)&uv)) {
 		return uv;
 	}
 	uv = gltv_memspool_alloc(sizeof(*uv));
@@ -497,7 +497,7 @@ uv_nomem:
 		gltv_log_fatal("load_coords_uv: Cannot get memory for name");
 	}
 	memcpy(uv->name, file_name, len);
-	gltv_hash_put(coords, (unsigned)(uv->name), uv);
+	gltv_hash_put(coords, (intptr_t)uv->name, uv);
 	return uv;
 }
 
@@ -506,7 +506,7 @@ static gltv_stack *dup_meshes = NULL;
 
 static void data_free_meshes()
 {
-	unsigned dummy_key;
+	intptr_t dummy_key;
 	mesh *m;
 	gltv_hash_reset(meshes);
 	while (gltv_hash_each(meshes, &dummy_key, (void**)&m)) {
@@ -521,7 +521,7 @@ void data_free_dup_meshes()
 	mesh *m;
 	unsigned i;
 	for (i=0; i<gltv_stack_size(dup_meshes); i++) {
-		m = gltv_stack_pop(dup_meshes);
+		m = (mesh *)gltv_stack_pop(dup_meshes);
 		gltv_memspool_unregister(m);
 	}
 	gltv_stack_del(dup_meshes);
@@ -551,7 +551,7 @@ mesh *data_load_mesh(const char *file_name, int recentre)
 	if (!m) {
 		gltv_log_fatal("Cannot get memory for mesh");
 	}
-	if (gltv_hash_get(meshes, (unsigned)file_name, (void**)&m2)) {
+	if (gltv_hash_get(meshes, (intptr_t)file_name, (void**)&m2)) {
 		/* Its allowed to instanciate a mesh severall times.
 		 * Then, coord_uv are merged, and we memorize only the first that was instancied.
 		 * Later, this mesh can be bound to another position */
@@ -559,7 +559,7 @@ mesh *data_load_mesh(const char *file_name, int recentre)
 		gltv_log_warning(GLTV_LOG_OPTIONAL, "forking mesh '%s'", m2->name);
 		memcpy(m,m2,sizeof(*m));
 		m->pos = NULL;
-		if (!gltv_stack_push(dup_meshes, m)) {
+		if (!gltv_stack_push(dup_meshes, (intptr_t)m)) {
 			gltv_log_fatal("Cannot push a duplicate mesh");
 		}
 		return m;
@@ -625,7 +625,7 @@ bad_mesh:
 		return NULL;
 	}
 	memcpy(m->name, file_name, len);
-	gltv_hash_put(meshes, (unsigned)(m->name), m);
+	gltv_hash_put(meshes, (intptr_t)m->name, m);
 	return m;
 }
 
@@ -680,7 +680,7 @@ bad_enigm:
 			strncpy(e->name, line, len+1);
 		} else {
 			mesh *m;
-			if (!gltv_hash_get(enigm_primitives, (unsigned)line, (void**)&m)) {	/* TODO : charger les primitives au fur et à mesure des besoins */
+			if (!gltv_hash_get(enigm_primitives, (intptr_t)line, (void**)&m)) {	/* TODO : charger les primitives au fur et à mesure des besoins */
 				gltv_log_fatal("Unknow primitive : '%s'\n",line);
 			}
 			if (e->nb_bricks == nb_bricks_max) {
@@ -745,7 +745,7 @@ full_mem_error:
 	e->bricks = gltv_memspool_alloc(sizeof(*e->bricks)*e->nb_bricks);
 	gltv_hash_reset(enigm_primitives);
 	for (u=0; u<e->nb_bricks; u++) {
-		unsigned dummy;
+		intptr_t dummy;
 		char ret;
 		ret = gltv_hash_each(enigm_primitives, &dummy, (void**)&e->bricks[u]);
 		assert(ret);
@@ -919,7 +919,7 @@ prim_error:
 		line[--len] = '\0';
 		m = data_load_mesh(line, 1);
 		if (NULL==m) goto prim_error;
-		gltv_hash_put(enigm_primitives, (unsigned)(m->name), m);
+		gltv_hash_put(enigm_primitives, (intptr_t)m->name, m);
 		gltv_log_warning(GLTV_LOG_DEBUG, "Adding primitive '%s'\n", m->name);
 	}
 	fclose(file1);

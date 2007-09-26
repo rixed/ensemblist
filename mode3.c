@@ -76,7 +76,7 @@ static enum { TRANSFO_TRANSLATE, TRANSFO_ROTATE, TRANSFO_SCALE } transformation;
 GLfloat pos_save[NB_MAX_PRIMS_IN_TREE][16];
 
 static struct {
-	char *file;
+	char const *file;
 	texture *tex;
 } background[] = {
 	{ "big1.png", NULL },
@@ -85,7 +85,7 @@ static struct {
 };
 #define NB_BACKPIC (sizeof(background)/sizeof(*background))
 static struct {
-	char *file;
+	char const *file;
 	texture *tex;
 } flower[] = {
 	{ "titefleur1.png", NULL },
@@ -96,7 +96,7 @@ static struct {
 #define NB_FLOWERS (sizeof(flower)/sizeof(*flower))
 
 struct {
-	const char *file;
+	char const *file;
 	mesh *m;
 } mesh_to_load[] = {
 	{ "arrow.mesh", NULL },

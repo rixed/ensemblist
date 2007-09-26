@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static char *user_score_file;	/* score file */
 char *user_rc_dir;
-char *user_name;
+char const *user_name;
 unsigned user_score;
 
 void init_void_user()
