@@ -68,7 +68,7 @@ int sys_make_dir(const char *dir)
 #endif
 }
 
-int sys_get_user_name(char **dest)
+int sys_get_user_name(char const **dest)
 {
 #ifdef _WINDOWS
 	DWORD dwLen=GETUSERNAME_MAXLEN;

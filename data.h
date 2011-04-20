@@ -32,7 +32,7 @@ struct position_s {
 	GLfloat c[16];
 	struct position_s *relative_to;
 	unsigned nb_sons;
-	char const *name;
+	char *name;
 	unsigned nb_meshes;
 	struct mesh_s *meshes[NB_MAX_MESHES_IN_POSITION];
 	struct position_s *sons[NB_MAX_SUBPOSITION];

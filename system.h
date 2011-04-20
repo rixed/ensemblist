@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern int sys_goto_dir(const char *);
 extern int sys_make_dir(const char *);
-extern int sys_get_user_name(char **);
+extern int sys_get_user_name(char const **);
 extern int sys_get_user_dir(char **);
 
 /* NOT USED ANYMORE

@@ -142,14 +142,12 @@ static int csg_parse(csg_node *node, unsigned nb_prims, mesh **meshes)
 		else if (str[c]==')') p_count--;
 	}
 	if (c>0) {
-		csg_op op;
+		csg_op op = CSG_AND;
 		if (str[c]==operator[CSG_MINUS]) {
 			op = CSG_MINUS;
 		} else if (str[c]==operator[CSG_UNION]) {
 			op = CSG_UNION;
-		} else if (str[c]==operator[CSG_AND]) {
-			op = CSG_AND;
-		}
+		} else assert(str[c]==operator[CSG_AND]);
 		node->type = CSG_OP;
 		node->u.op.op = op;
 		node->u.op.left = csg_node_new(str, c);

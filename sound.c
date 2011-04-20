@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 int sound_on=0;
 
 struct {
-	const char *file;
+	char *file;
 	MODULE *mod;
 } musics[]= {
 	{ "chrono.s3m" },
@@ -37,7 +37,7 @@ struct {
 unsigned nb_musics = (sizeof(musics)/sizeof(*musics));
 
 struct {
-	const char *file;
+	char *file;
 	SAMPLE *sample;
 } samples[] = {
 	{ "clic.wav" },
@@ -54,8 +54,15 @@ void sound_init(int active) {
 	unsigned i;
 	sound_on = active;
 	if (!sound_on) return;
-	MikMod_RegisterAllDrivers();
+
+	/* register only some useful drivers (we don't want to fallback 
+	 * to some disk writer if no real driver is available) */
+	MikMod_RegisterDriver(&drv_esd);
+	MikMod_RegisterDriver(&drv_alsa);
+	MikMod_RegisterDriver(&drv_oss);
+	MikMod_RegisterDriver(&drv_nos);
 	MikMod_RegisterAllLoaders();
+
 	if (MikMod_Init("")) {
 		gltv_log_fatal("MikMod : Cannot initialize sound: %s", MikMod_strerror(MikMod_errno));
 	}

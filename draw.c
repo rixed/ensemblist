@@ -51,7 +51,11 @@ void wgl_free()
 #endif
 
 static GLuint ktx_region;
-static char ktx_ok, wgl_ok;
+static char ktx_ok;
+#ifdef _WIN32
+static char wgl_ok;
+static char buffer_region_succeeded;
+#endif
 
 #ifdef __APPLE__
 #import <mach-o/dyld.h>
@@ -75,17 +79,17 @@ static void *NSGLGetProcAddress(const char *name)
 static void *lglGetProcAddress(const char *name)
 {
 #ifdef _WIN32
-	void *t = (void*)wglGetProcAddress(name);
+	void *t = (void*)wglGetProcAddress((const GLubyte *)name);
 	if (t == 0)
 		gltv_log_warning(GLTV_LOG_MUSTSEE, "wglGetProcAddress know nothing about '%s'", name);
 	return NULL;
 #elif __APPLE__ 
-	void *t = (void*)NSGLGetProcAddress(name);
+	void *t = (void*)NSGLGetProcAddress((const GLubyte *)name);
 	if (t == 0)
 		gltv_log_warning(GLTV_LOG_MUSTSEE, "NSGLGetProcAddress know nothing about '%s'", name);
 	return t;
 #else
-	void *t = (void*)glXGetProcAddressARB(name);
+	void *t = (void*)glXGetProcAddressARB((const GLubyte *)name);
 	if (t == 0)
 		gltv_log_warning(GLTV_LOG_MUSTSEE, "glXGetProcAddress know nothing about '%s'", name);
 	return t;
@@ -114,8 +118,8 @@ void draw_init()
 	gltv_log_warning(GLTV_LOG_OPTIONAL, "OpenGl Vendor : %s", glGetString(GL_VENDOR));
 	gltv_log_warning(GLTV_LOG_OPTIONAL, "OpenGl Renderer : %s", glGetString(GL_RENDERER));
 	gltv_log_warning(GLTV_LOG_OPTIONAL, "OpenGl Version : %s", glGetString(GL_VERSION));
-	const char *extensions = glGetString(GL_EXTENSIONS);
-	gltv_log_warning(GLTV_LOG_OPTIONAL, "OpenGl Extensions : %s", extensions);
+	const GLubyte *extensions = glGetString(GL_EXTENSIONS);
+	gltv_log_warning(GLTV_LOG_OPTIONAL, "OpenGl Extensions : %s", (char const *)extensions);
 	/* draw specific reset */
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
@@ -125,7 +129,7 @@ void draw_init()
 	gltv_log_warning(level, "Stencil size : %d bits\n", stencil_size);
 	ktx_ok = 0;
 	if (with_ktx) {
-		if (strstr(extensions, "GL_KTX_buffer_region")) {
+		if (strstr((char const *)extensions, "GL_KTX_buffer_region")) {
 			/* get KTX functions */
 			glNewBufferRegion = (PFNGLNEWBUFFERREGIONPROC)lglGetProcAddress("glNewBufferRegion");
 			glDeleteBufferRegion = (PFNGLDELETEBUFFERREGIONPROC)lglGetProcAddress("glDeleteBufferRegion");
@@ -206,7 +210,6 @@ static void draw_node(csg_node *node)
 
 static GLfloat *depth_buffer = NULL;
 static unsigned buffer_size = 0;
-static char buffer_region_succeeded;
 GLfloat *depthSave = NULL;
 GLubyte *stencilSave = NULL;
 GLubyte *colorSave = NULL;
@@ -465,7 +468,7 @@ void draw_union_of_partial_products(csg_union_of_partial_products *uopp)
 	unsigned g, uu, u = 0, p;
 	int a;
 	char fake_new_group = 0;
-	b_box_2d *region;	/* 2d region of a group (to save only this region) */
+	b_box_2d *region = NULL;	/* 2d region of a group (to save only this region) */
 	b_box_2d region_full = { 0, 0,0, 0,0 };
 	region_full.xmax=glut_fenLong;
 	region_full.ymax=glut_fenHaut;

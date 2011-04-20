@@ -401,7 +401,7 @@ mesh *geom_clic_position(position *pos, GLfloat *z)
 	 * the position of every meshes, and look for a clicked mesh.
 	 * Return NULL if none found, or mesh
 	 */
-	GLfloat m[16], zz, *old_current;
+	GLfloat m[16], zz=0, *old_current;
 	unsigned s;
 	mesh *clicked = NULL, *oo;
 	geom_matrix_mult(m, current_modelview, pos->c);

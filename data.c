@@ -331,7 +331,7 @@ position *data_get_named_position(const char *name)
 	}
 }
 
-static void data_free_positions()
+static void data_free_positions(void)
 {
 	intptr_t dummy_key;
 	position *pos;
@@ -837,8 +837,8 @@ void data_enigm_add(enigm *e)
 
 void data_save_all()
 {
-	/* we save in userland directory the enigms created by the user, ie enigms curently in edition mode and free enigms */ 
-	FILE *file;
+	/* we save in user directory the enigms created by the user, ie enigms curently in edition mode and free enigms */ 
+	FILE *file = 0;
 	unsigned nb_enigms, i;
 	char no_save = 0;
 	if (!sys_goto_dir(user_rc_dir)) no_save = 1;
